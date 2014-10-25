@@ -80,7 +80,7 @@ limitations under the License.
             <div>Media Type: <span id="mediaType">Unkown</span></div>
             <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
             <div>Message: <span id="message">No message</span> </div>
-            <!--img src="http://chart.apis.google.com/chart?cht=qr&amp;chs=300x300&amp;chl=http%3A//niels-henriks-boks.com&amp;chld=H|0" alt="QR Code"/-->
+            <img id="qr" alt="QR Code"/>
         </div>
     </div>
     <div class="videocontainer">
@@ -255,7 +255,9 @@ limitations under the License.
             } else {
                 document.getElementById('messages').style.display = 'none';
             }*/
+
             displayMessage(event['data']);
+            displayMessage(event['question']);
         }
 
         // This class is used to send/receive media messages/events using the media protocol/namespace (urn:x-cast:com.google.cast.media).
@@ -656,6 +658,10 @@ limitations under the License.
 
         function displayMessage(message) {
             $('#message').text(message.type);
+        }
+
+        function displayQR(url) {
+            $('#qr').attr('src', 'http://gullible-dingo-5267.vagrantshare.com/');
         }
 
     </script>

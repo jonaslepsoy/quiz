@@ -147,6 +147,7 @@ function onInitSuccess() {
  * initialization error callback
  */
 function onError(message) {
+    console.log(JSON.stringify(message));
     appendMessage("onError: "+JSON.stringify(message));
 }
 
@@ -534,11 +535,16 @@ function mediaCommandSuccessCallback(info) {
   appendMessage(info);
 }
 
-function q1 (){
+function q1(){
     var question = {
-        question: "Hva heter artisten?",
-        type: "youtube",
-        id: "3vC5TsSyNjU"
+        question: {
+            question: "Hva heter artisten?",
+            type: "youtube",
+            id: "3vC5TsSyNjU"
+        }
     };
+    session.sendMessage('Sending question');
     session.sendMessage(question);
+
+    console.log("Question: " , question);
 }
