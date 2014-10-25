@@ -255,9 +255,10 @@ limitations under the License.
             } else {
                 document.getElementById('messages').style.display = 'none';
             }*/
+            
+            console.log(event);
 
             displayMessage(event['data']);
-            displayMessage(event['question']);
         }
 
         // This class is used to send/receive media messages/events using the media protocol/namespace (urn:x-cast:com.google.cast.media).
@@ -657,7 +658,8 @@ limitations under the License.
         }
 
         function displayMessage(message) {
-            $('#message').text(message.type);
+            console.log(message);
+            $('#message').text(message);
         }
 
         function displayQR(url) {
