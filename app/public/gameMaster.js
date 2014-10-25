@@ -33,6 +33,13 @@ socket.on('new player', function(player) {
     players[player.username] = player;
     playersList.push(player);
     data.publish({players: playersList});
+    var player = {
+        player: {
+            username: player.username,
+            score: player.score
+        }
+    };
+    sendMessage(player);
 });
 
 socket.on('start game', function(game) {
