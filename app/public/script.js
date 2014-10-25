@@ -89,6 +89,7 @@ function onRequestSessionSuccess(e) {
     console.log("Successfully created session: " + e.sessionId);
     session = e;
     $("#castme").hide();
+    $("#startgame").show();
     $("#stop").show();
 }
 

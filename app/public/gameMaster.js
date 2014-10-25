@@ -28,15 +28,12 @@ socket.on('players', function(players) {
 });
 
 socket.on('new player', function(party) {
-    console.log('party: ' ,party);
-    console.log('partyplayers: ',party.players);
 
     var players = [];
     $.each(party.players, function() {
         players.push(this.username);
     });
 
-    console.log('players', players);
     playersList.push(party.newPlayer);
     data.publish({players: playersList});
 
@@ -55,15 +52,49 @@ socket.on('new player', function(party) {
             players: players
         }
     }
-    console.log('player: ', player);
-    console.log('party:', party)
+    console.log('party',party);
     sendMessage(player);
     sendMessage(party);
 });
 
+socket.on('ready', function(party) {
+    var party = {
+            message: {
+                type: 'party',
+                minPlayers: party.minPlayers,
+                readyPlayers: party.readyPlayers,
+                players: players
+            }
+        }
+        console.log('party',party);
+        sendMessage(party);
+});
+
 socket.on('start game', function(game) {
     console.log(game);
+    var message = {
+        message: {
+            type: 'game',
+            game: game
+        }
+    }
+
+    sendMessage(message);
+
+    message = {
+        message: {
+            type: 'command',
+            command: 'startGame'
+        }
+    }
+    sendMessage(message);
+
 });
+
+socket.on('display scoreboard', function(scoreboard) {
+    console.log(scoreboard);
+});
+
 
 var GameMaster = React.createClass({
     getInitialState: function() {
