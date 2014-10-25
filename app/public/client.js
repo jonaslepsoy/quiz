@@ -23,7 +23,9 @@ socket.on('quiz result', function(msg){
     console.log('message: ' + msg);
 });
 
+var joined = false;
 socket.on('ready?', function(mesg) {
+    joined = true;
     data.publish({mode: 'ready'});
 });
 
@@ -40,13 +42,17 @@ socket.on('next game', function(gameType) {
     data.publish({mode: gameType});
 });
 
+socket.on('game over', function(players) {
+    data.publish({mode: 'gameOver'});
+    socket.emit('leave', true);
+});
+
 var Join = React.createClass({
     getInitialState: function() {
         return {name: null};
     },
     handleNameChanged: function(e) {
         var name = e.target.value;
-        console.log(name);
         this.setState({name: name});
         e.preventDefault();
     },
@@ -115,6 +121,16 @@ var Next = React.createClass({
     }
 });
 
+var GameOver = React.createClass({
+    render: function() {
+        return (
+            <div className="login-screen">
+                GAME OVER!
+            </div>
+        );
+    }
+});
+
 var Quiz = React.createClass({
     handleClick: function(e) {
         var color = e.target.id;
@@ -125,10 +141,10 @@ var Quiz = React.createClass({
         return (
             <div className="alternatives">
                 <div className="button-group">
-                    <button id="red" className="col-xs-6" onClick={this.handleClick}>Red</button>
-                    <button id="green" className="col-xs-6" onClick={this.handleClick}>Green</button>
-                    <button id="blue" className="col-xs-6" onClick={this.handleClick}>Blue</button>
-                    <button id="yellow" className="col-xs-6" onClick={this.handleClick}>Yellow</button>
+                    <button id="red" className="col-xs-6" onClick={this.handleClick}></button>
+                    <button id="green" className="col-xs-6" onClick={this.handleClick}></button>
+                    <button id="blue" className="col-xs-6" onClick={this.handleClick}></button>
+                    <button id="yellow" className="col-xs-6" onClick={this.handleClick}></button>
                 </div>
             </div>
         );
@@ -150,16 +166,22 @@ var GameClient = React.createClass({
     modes: {
         join: <Join />,
         ready: <Ready />,
+        next: <Next />,
         wait: <Waiting />,
-        quiz: <Quiz />
+        quiz: <Quiz />,
+        gameOver: <GameOver />
     },
     selectMode: function(mode) {
+        if(joined) {
         var modeComponent = this.modes[mode];
-        if(!modeComponent) {
-            console.err(mode + ' not found');
-            modeComponent = this.modes.wait;
+            if(!modeComponent) {
+                console.err(mode + ' not found');
+                modeComponent = this.modes.wait;
+            }
+            return modeComponent;
+        } else {
+            return this.modes.join;
         }
-        return modeComponent;
     },
     getInitialState: function() {
         return {mode: 'join'};
