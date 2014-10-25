@@ -169,7 +169,7 @@ limitations under the License.
                 <div id="player"></div>
                 <video id="receiverVideoElement"></video>
             </div>
-            <div class="imagecontainer col-xs-6">
+            <div class="imaaecontainer col-xs-6">
                 <img id="imageElement"/>
             </div>
             <div id="alternatives col-xs-6">
@@ -407,6 +407,7 @@ limitations under the License.
                 if (game.mediatype=='youtube') {
                     var videoId = game.media.substring(game.media.indexOf('?v=')+3);
 
+                    $('#player').children().remove();
                     player = new YT.Player('player', {
                         height: 600,
                         width: 400,
