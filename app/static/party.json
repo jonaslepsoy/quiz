@@ -17,7 +17,7 @@
             "type": "quiz",
             "mediatype": "youtube",
             "media": "https://www.youtube.com/watch?v=aQxcugbmg9M",
-            "question": "Hva drepte denne manne?",
+            "question": "Hva drepte denne mannen?",
             "alternatives": [
                 {"text": "Pusekatt", "valid": false, "color": "blue"},
                 {"text": "Rokke", "valid": true, "color": "red"},

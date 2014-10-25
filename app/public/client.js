@@ -113,9 +113,9 @@ var Next = React.createClass({
     },
     render: function() {
         return (
-            <div className="login-screen">
-                <div className="input-group-lg">
-                    <button id="ready" type="submit" className="btn btn-primary btn-lg" onClick={this.handleReady}>Next!</button>
+            <div className="next-screen container">
+                <div className="center">
+                    <button id="next" type="submit" className="btn btn-primary btn-lg" onClick={this.handleReady}>Next!</button>
                 </div>
             </div>
         );
@@ -125,7 +125,7 @@ var Next = React.createClass({
 var GameOver = React.createClass({
     render: function() {
         return (
-            <div className="login-screen">
+            <div className="gameOver-screen">
                 GAME OVER!
             </div>
         );
