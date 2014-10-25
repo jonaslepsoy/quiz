@@ -354,12 +354,12 @@ limitations under the License.
                 $.each(game.alternatives, function(index,element){
                     $('#alternative' + index).text(element.text);
                 });
-                if(game.mediatype=='youtube') {
+                if (game.mediatype=='youtube') {
 
                     var videoId = game.media.substring(game.media.indexOf('?v=')+3);
                     console.log('videoId: ' , videoId);
 
-                    player = new YT.Player('player', {
+                    /*player = new YT.Player('player', {
                         height: 600,
                         width: 400,
                         videoId: videoId,
@@ -368,9 +368,8 @@ limitations under the License.
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange
                         }
-                    }
+                    }*/
                 }
-
             }
 
             displayMessage(event['data']);
