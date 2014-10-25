@@ -78,6 +78,14 @@ limitations under the License.
     <h1>Bli med på Quiz!</h1>
     <div style="margin-bottom:3em;">Skann QR-koden med din smarttelefon</div>
     <img id="qr" alt="QR Code"/>
+    <div id="participantContainer">
+        <div>
+            <span id="numberOfPlayers">0</span> spillere
+        </div>
+        <div>
+            <span id="numberOfSpots">4</span> plasser ledig
+        </div>
+    </div>
 </div>
 <div class="messagecontainer">
     <div id="messages" style="text-align:center">
@@ -116,6 +124,9 @@ limitations under the License.
         window.connectedCastSenders = []; // {senderId:'', channel:obj}
 
         var player = null; //  Our Youtube Player object;
+
+        var spots = 4;
+        var numberOfPlayers = 0;
 
         function setHudMessage(elementId, message) {
             document.getElementById(elementId).innerHTML = '' + JSON.stringify(message);
@@ -276,7 +287,11 @@ limitations under the License.
 
             console.log(event);
 
-
+            if(event['data'].player) {
+                numberOfPlayers++;
+                $('#numberOfPlayers').text(numberOfPlayers);
+                $('#numberOfSpots').text(spots - numberOfPlayers);
+            }
 
             displayMessage(event['data']);
         }
