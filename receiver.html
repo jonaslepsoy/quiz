@@ -673,6 +673,8 @@ limitations under the License.
 
         /* YOUTUBE */
 
+        var ytMessages;
+
         $(document).ready(function(){
 
             var player;
@@ -703,14 +705,14 @@ limitations under the License.
                 });
         }
 
-        function onPlayerReady(event) {}
+        function onPlayerReady(event) {
+            console.log(event);
+        }
+
 
         function onPlayerStateChange(event) {
-            session.send({'event':'stateChange','message':event.data});
-        }}
-
-
-
+            console.log(event);
+        }
 </script>
 </body>
 </html>
