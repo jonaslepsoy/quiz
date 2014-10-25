@@ -14,7 +14,7 @@ $(document).ready(function () {
 });
 
 function initializeCastApi() {
-    var applicationID = '794B7BBF';
+    var applicationID = '9F538139';
     var sessionRequest = new chrome.cast.SessionRequest(applicationID);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest,
     sessionListener,
