@@ -10,10 +10,11 @@ var players = [];
 var scoreboard = {};
 var ready = [];
 var gameNumber = 0;
-var minPlayers = 2;
+var minPlayers = 4;
 var gameMaster = null;
 var party = JSON.parse(fs.readFileSync(path.join(__dirname, 'static/party.json'), 'utf8'));
 var currentGame = {};
+var gameInProgress = false;
 
 var psychOut = function(username) {
 
@@ -85,6 +86,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('join', function(username){
+        if(gameInProgress) return;
         if(!gameMaster) {
             socket.emit('join', true);
             return;
@@ -113,6 +115,7 @@ io.on('connection', function(socket){
         if(!socket.username) return;
         console.log(socket.username + ": " + 'ready');
         var player = scoreboard[socket.username];
+        if(!player) return;
         player.ready = true;
         nextGame(socket);
         if(gameMaster) {
@@ -128,6 +131,7 @@ io.on('connection', function(socket){
     socket.on('quiz answer', function(msg){
         if(!socket.username) return;
         player = scoreboard[socket.username];
+        if(!player) return;
         console.log(player.username + ': ' + msg);
         if(currentGame.game.checkAnswer(msg)) {
             currentGame.winners.push(player);
@@ -144,6 +148,7 @@ io.on('connection', function(socket){
     socket.on('psych out answer', function(msg){
         if(!socket.username) return;
         player = scoreboard[socket.username];
+        if(!player) return;
         console.log(player.username + ': ' + msg);
         currentGame.game.checkAnswer(player.username);
     });
@@ -173,16 +178,19 @@ var chooseGame = function() {
 var nextGame = function(socket) {
     if(!socket.username) return;
     player = scoreboard[socket.username];
+    if(!player) return;
     ready.push(player);
     console.log('ready count: ' + ready.length + ' (minPlayers: ' + minPlayers + ', playerCount: ' + players.length + ')');
     if(ready.length >= minPlayers && ready.length === players.length) {
         ready = [];
         currentGame = chooseGame();
         if(currentGame) {
+            gameInProgress = true;
             console.log('start game: ' + currentGame.game.type);
             io.sockets.emit('next game', currentGame.game.type);
             gameMaster.emit('start game', currentGame);
         } else {
+            gameInProgress = false;
             gameNumber = 0;
             console.log('party is over');
             console.log(players);
