@@ -76,6 +76,7 @@ limitations under the License.
         <div>Host State: <span id="mediaHostState">Unknown</span></div>
         <div>Media Type: <span id="mediaType">Unkown</span></div>
         <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
+        <div id="message"></div>
         <img src="http://chart.apis.google.com/chart?cht=qr&amp;chs=300x300&amp;chl=http%3A//niels-henriks-boks.com&amp;chld=H|0" alt="QR Code"/>
     </div>
     <video id="receiverVideoElement"></video>
@@ -245,11 +246,12 @@ limitations under the License.
             console.log("### CUSTOM MESSAGE: " + JSON.stringify(event));
             // show/hide messages
             console.log(event['data']);
-            if(event['data']==='show') {
+            /*if(event['data']==='show') {
                 document.getElementById('messages').style.display = 'block';
             } else {
                 document.getElementById('messages').style.display = 'none';
-            }
+            }*/
+            displayMessage(event['data']);
         }
 
         // This class is used to send/receive media messages/events using the media protocol/namesapce (urn:x-cast:com.google.cast.media).
@@ -646,6 +648,10 @@ limitations under the License.
         // Add your app logic here after the receiver SDK has been initialized.
         function startQuiz() {
 
+        }
+
+        function displayMessage(message) {
+            $('#message').innerHTML(message);
         }
         
     </script>
