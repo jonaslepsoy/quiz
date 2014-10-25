@@ -34,28 +34,16 @@ limitations under the License.
         video {
             height:auto;
             width:50%;
-            text-align: center;
+            float:right;
             border:0px solid silver;
-            display: table-cell;
-            vertical-align: middle;
-            color: #FFFFFF;
             background-color: #000000;
-            font-weight: bold;
-            font-family: Verdana, Geneva, sans-serif;
-            font-size:40px;
-            float:left;
-            z-index: 1;
-            position:absolute;
         }
         #messages {
             color: #FFFFFF;
+            width:50%
             float: left;
-            margin-left: 25px;
-            margin-top:  25px;
-            z-index: 2;
-            position:absolute;
+            padding: 1em;
             font-weight: bold;
-            width:1000PX;
             background-color: rgba(0,0,0,0.5);
         }
 
@@ -653,6 +641,10 @@ limitations under the License.
 
         function displayMessage(message) {
             $('#message').text(message);
+        }
+
+        function displayVideo() {
+
         }
         
     </script>
