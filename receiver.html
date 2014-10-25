@@ -85,6 +85,10 @@ limitations under the License.
     </div>
     <div class="videocontainer">
         <video id="receiverVideoElement"></video>
+        <div id="wrapper">
+            <div id="player"></div>
+            <div id="annotation"></div>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -255,13 +259,13 @@ limitations under the License.
             } else {
                 document.getElementById('messages').style.display = 'none';
             }*/
-            
+
             console.log(event);
 
             displayMessage(event['data']);
         }
 
-        // This class is used to send/receive media messages/events using the media protocol/namespace (urn:x-cast:com.google.cast.media).
+        // This class is used to send/receive media messages/events using the media protocol/namespace (urn:x-.:com.google.cast.media).
         window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
 
         /**
@@ -564,7 +568,7 @@ limitations under the License.
          * to listen for the events it is interested on.
          */
         window.castReceiverManager.start(appConfig);
-        
+
 
         /**
          play - The process of play has started
@@ -663,7 +667,80 @@ limitations under the License.
         }
 
         function displayQR(url) {
-            $('#qr').attr('src', 'http://gullible-dingo-5267.vagrantshare.com/');
+            $('#qr').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + 'http://gullible-dingo-5267.vagrantshare.com/' + '&chld=H|0' );
+        }
+
+
+        /* YOUTUBE */
+
+        $(document).ready(function(){
+            var receiver = new cast.receiver.Receiver('23A303A5', ['ChromecastYoutube'],"",5);
+            var ytChannelHandler = new cast.receiver.ChannelHandler('ChromecastYoutube');
+            var channel;
+
+            ytChannelHandler.addChannelFactory(receiver.createChannelFactory('ChromecastYoutube'));
+            ytChannelHandler.addEventListener(
+                    cast.receiver.Channel.EventType.MESSAGE,
+                    onMessage.bind(this)
+            );
+
+            receiver.start();
+
+            window.addEventListener('load', function() {
+                    var tag = document.createElement('script');
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            });
+
+            var player;
+
+    ytMessages={
+                    "setChannel": function(event) { // this will preserve the channel socket so messages can go back and forth
+                            channel=event.target;
+                    },
+                    "playVideo": function() { // execute various YouTube commands when the corresponding messages are sent from the sender
+                            player.playVideo();
+                    },
+                    "pauseVideo": function() {
+                            player.pauseVideo();
+                    },
+                    "stopVideo": function() {
+                            player.stopVideo();
+                    },
+                    "getStatus": function() { // send the status back to the sender when requested
+                           channel.send({'event':'statusCheck','message':player.getPlayerState()});
+                    }
+            };
+        }
+
+        function onPlayerStateChange(event) {
+                channel.send({'event':'stateChange','message':event.data});
+                if (event.data==YT.PlayerState.ENDED) {
+                        endcast();
+                }
+        }
+
+        function onMessage(event) {
+                ytMessages[event.message](event);
+        }
+
+        function endcast() {
+                $("#wrapper").html("<div id='goodbye'>Thanks for Watching!</div>");
+                setTimeout(window.close, 8000);
+        }
+
+        function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                        height: 562,
+                        width: 1000,
+                        videoId: 'g5WB-p-QBJc',
+                        playerVars: { 'autoplay': 0, 'controls': 0 },
+                        events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                        }
+                });
         }
 
     </script>

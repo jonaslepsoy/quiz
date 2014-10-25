@@ -543,8 +543,26 @@ function q1(){
             id: "3vC5TsSyNjU"
         }
     };
-    session.sendMessage('Sending question');
-    session.sendMessage(question);
+    sendMessage('Sending question');
+    sendMessage(question);
+
+    session.launchApp
 
     console.log("Question: " , question);
 }
+
+    function youtube(){
+        cast_api.sendMessage(session.activity.activityId,"ChromecastYoutube","setChannel");
+        cast_api.addMessageListener(session.activity.activityId,"ChromecastYoutube",function(msg) {
+                if (msg.event=="stateChange") {
+                        session.player.status=msg.message;
+                }
+        });
+    }
+
+session.ytPlaybackCmd = function(message) {
+    if (!$scope.activity.activityId) {
+      return;
+    }
+    cast_api.sendMessage($scope.activity.activityId,"ChromecastYoutube",message);
+};
