@@ -72,6 +72,7 @@ io.on('connection', function(socket){
     socket.on('join', function(username){
         if(!gameMaster) {
             socket.emit('join', true);
+            return;
         }
         socket.username = username;
         var player = {
