@@ -92,3 +92,10 @@ button{
 #messages li:nth-child(odd) {
     background: #eee;
 }
+
+/* ---- GAMEMASTER ---- */
+/* STARTUP */
+.qr-code{
+}
+
+/* GAME */
