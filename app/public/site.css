@@ -1,3 +1,95 @@
+/* GAMEMASTER */
+body.background{
+    overflow:hidden;
+    margin:0;
+    padding:0;
+    background:black;
+}
+
+.textcontainer{
+    margin-top: 40px;
+}
+
+
+.qr-code{
+    margin: 20px 0;
+}
+
+h4{
+    margin-bottom: 10px;
+}
+
+.videocontainer {
+    width:50%;
+    float:right;
+    height:100%;
+    background:#000000;
+    padding-left: 0;
+}
+
+video {
+    height:auto;
+    width:100%;
+    border:0px solid silver;
+    background-color: #000000;
+}
+
+#welcome {
+    text-align:center;
+    display: none;
+}
+
+.messagecontainer, .textcontainer{
+    background-color: rgba(0,0,0,0.5);
+    display:block;
+    color:white;
+}
+
+.messagecontainer {
+    width:50%;
+    height:100%;
+    float: left;
+    background-color: rgba(0,0,0,0.5);
+    display:block;
+}
+
+#messages {
+    padding: 1em;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#messages span {
+    font-weight: normal;
+}
+
+.game {
+    color: lightgray;
+   /* display: none;*/
+}
+
+#alternative1 {
+    background:blue;
+
+}
+
+#alternative2 {
+    background:red;
+    color: lightgray;
+}
+
+#alternative3 {
+    background:green;
+    color: lightgray;
+}
+
+#alternative4 {
+    background:yellow;
+    color: #000000;
+}
+
+
+/* CLIENT */
 * {
     margin: 0;
     padding: 0;
