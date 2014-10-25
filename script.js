@@ -94,3 +94,19 @@ function onLoadSuccess() {
 function onLoadError() {
         console.log('Failed to load image.');
 }
+
+$('#stop').click(function(){
+        stopApp();
+});
+
+function stopApp() {
+        session.stop(onStopAppSuccess, onStopAppError);
+}
+
+function onStopAppSuccess() {
+        console.log('Successfully stopped app.');
+}
+
+function onStopAppError() {
+        console.log('Error stopping app.');
+}
