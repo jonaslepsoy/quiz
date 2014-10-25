@@ -8,12 +8,13 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     </head>
+<<<<<<< Updated upstream
     <body class="mobile-receiver">
         <div class="login-screen">
             <div class="input-group-lg">
                 <label for="username" class="label">Velg ditt brukernavn: </label>
                 <input id="username" class="username input-sm" type="text" placeholder="Brukernavn"/>
-                <button id="join" type="submit" class="btn-sm">GO!</button>
+                <button type="submit" class="btn-sm">GO!</button>
             </div>
         </div>
         <div class="alternatives">
@@ -27,6 +28,16 @@
         <div class="slider">
             //TODO
         </div>
+=======
+    <body>
+        <input type="text" name="name" ></input>
+        <button id="join">Join</button>
+        <hr/>
+        <button id="red">Red</button>
+        <button id="green">Green</button>
+        <button id="blue">Blue</button>
+        <button id="yellow">Yellow</button>
         <script src="/client.js"></script>
+>>>>>>> Stashed changes
     </body>
 </html>
