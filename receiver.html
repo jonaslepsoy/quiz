@@ -85,6 +85,9 @@ limitations under the License.
         <div>
             <span id="numberOfSpots">4</span> plasser ledig.
         </div>
+        <div>
+            <span id="lastPlayerJoined"></span>
+        </div>
     </div>
 </div>
 <div class="messagecontainer">
@@ -290,10 +293,11 @@ limitations under the License.
             console.log('event.data[message]: ', JSON.parse(event.data));
             var message = JSON.parse(event.data);
 
-            if(message.type == 'player') {
+            if(message.message.type == 'player') {
                 numberOfPlayers++;
                 $('#numberOfPlayers').text(numberOfPlayers);
                 $('#numberOfSpots').text(spots - numberOfPlayers);
+                $('#lastPlayerJoined').text(message.message.username + ' er med!!!');
             }
 
             displayMessage(event['data']);
