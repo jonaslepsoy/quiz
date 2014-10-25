@@ -63,7 +63,7 @@ socket.on('ready', function(party) {
                 type: 'party',
                 minPlayers: party.minPlayers,
                 readyPlayers: party.readyPlayers,
-                players: players
+                players: party.players
             }
         }
         console.log('party',party);
@@ -71,13 +71,13 @@ socket.on('ready', function(party) {
 });
 
 socket.on('start game', function(game) {
-    console.log(game);
+    console.log('game: ', game);
     var message = {
         message: {
             type: 'game',
             game: game
         }
-    }
+    };
 
     sendMessage(message);
 
@@ -86,12 +86,19 @@ socket.on('start game', function(game) {
             type: 'command',
             command: 'startGame'
         }
-    }
+    };
     sendMessage(message);
 });
 
-socket.on('display scoreboard', function(scoreboard) {
+socket.on('update scoreboard', function(scoreboard) {
     console.log(scoreboard);
+    var message = {
+        message: {
+            type: 'scoreboard',
+            scoreboard: scoreboard
+        }
+    };
+    sendMessage(message);
 });
 
 
