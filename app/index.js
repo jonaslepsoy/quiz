@@ -56,9 +56,9 @@ io.on('connection', function(socket){
     });
 
     socket.on('game master join', function(msg) {
-        if(!gameMaster) {
-            gameMaster = socket;
-        }
+        gameMaster = socket;
+        gameMaster.emit('players', players);
+        console.log('game master joined');
     });
 
     socket.on('join', function(username){
@@ -69,6 +69,9 @@ io.on('connection', function(socket){
         };
         players[username] = player;
         playerCount++;
+        if(gameMaster) {
+            gameMaster.emit('new player', player);
+        }
         console.log(player);
     });
 

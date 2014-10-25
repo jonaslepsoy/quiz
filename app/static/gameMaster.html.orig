@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO chat</title>
+
+
+        <link rel="stylesheet" href="../public/site.css"/>
+        <link rel="stylesheet" href="../public/bootstrap.min.css">
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/JSXTransformer.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.2/react-with-addons.js"></script>
+    </head>
+    <body>
+<<<<<<< Updated upstream
+        <div class="startup col-xs-12 clearfix">
+            <div class="qr col-xs-6">
+                <img class="qr-code" src="http://img2.wikia.nocookie.net/__cb20130720012650/despicableme/images/1/18/Minion_dave.jpg"/>
+            </div>
+            <div class="players col-xs-6">
+                <ul class="player-list list-unstyled">
+                    <li class="player">Cathrine Holm</li>
+                    <li class="player">Cathrine Holm</li>
+                    <li class="player">Cathrine Holm</li>
+                    <li class="player">Cathrine Holm</li>
+                </ul>
+            </div>
+        </div>
+        <div class="game col-xs-12 clearfix">
+            <div class="question col-xs-6">
+                <iframe width="560" height="315" src="//www.youtube.com/embed/qTSDL94_Y7M" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="answers col-xs-6">
+                <ol class="answer-list">
+                    <li class="answer">alternativ</li>
+                    <li class="answer">alternativ</li>
+                    <li class="answer">alternativ</li>
+                    <li class="answer">alternativ</li>
+                </ol>
+            </div>
+        </div>
+
+        <script src="/gameMaster.js"></script>
+=======
+        <section id="content"></section>
+        <script type="text/jsx" src="/gameMaster.js"></script>
+>>>>>>> Stashed changes
+    </body>
+</html>
