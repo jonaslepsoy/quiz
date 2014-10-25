@@ -27,6 +27,16 @@ $(document).ready(function () {
         sendMessage(message);
     });
 
+    $('#qr').click(function () {
+        var message = {
+            message: {
+                type: 'qr',
+                qr: $('#qrCode')
+            }
+        }
+        sendMessage(message);
+    });
+
 
 });
 

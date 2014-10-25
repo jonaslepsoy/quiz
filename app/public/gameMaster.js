@@ -88,7 +88,6 @@ socket.on('start game', function(game) {
         }
     }
     sendMessage(message);
-
 });
 
 socket.on('display scoreboard', function(scoreboard) {

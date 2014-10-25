@@ -141,8 +141,10 @@ limitations under the License.
 <div class="container">
     <div id="welcome" class="textcontainer">
         <h1>Bli med på Quiz!</h1>
-        <h3>Skann QR-koden med din smarttelefon</h3>
-        <img id="qr" class="qr-code" alt="QR Code"/>
+        <div id="qrcontainer">
+            <h3>Skann QR-koden med din smarttelefon</h3>
+            <img id="qr" class="qr-code" alt="QR Code"/>
+        </div>
         <div id="participantContainer">
             <div>
                 <h4><span id="numberOfPlayers">0</span> er innmeldt</h4>
@@ -419,6 +421,11 @@ limitations under the License.
                     console.log('Imagequiz');
                     $('#imageelement').attr('src',game.media);
                 }
+            }
+
+            /* QR Code */
+            if(payload.message.type == 'qr') {
+                displayQR(payload.message.qr);
             }
 
             displayMessage(event['data']);
@@ -849,9 +856,6 @@ limitations under the License.
                         }
                 });*/
             }
-
-
-            displayQR('http://gullible-dingo-5267.vagrantshare.com/');
 
         });
 
