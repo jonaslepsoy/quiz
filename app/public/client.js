@@ -156,7 +156,8 @@ var GameClient = React.createClass({
     selectMode: function(mode) {
         var modeComponent = this.modes[mode];
         if(!modeComponent) {
-            modeComponent = modes.wait;
+            console.err(mode + ' not found');
+            modeComponent = this.modes.wait;
         }
         return modeComponent;
     },
