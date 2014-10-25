@@ -288,7 +288,7 @@ limitations under the License.
 
             console.log('event.data: ', event.data);
             console.log('event.data[message]: ', JSON.parse(event.data));
-            message = JSON.parse(event.data);
+            var message = JSON.parse(event.data);
 
             if(message.type == 'player') {
                 numberOfPlayers++;
