@@ -26,7 +26,7 @@ limitations under the License.
     -->
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"/>
     <style>
         body {
             overflow:hidden;
@@ -674,68 +674,28 @@ limitations under the License.
         /* YOUTUBE */
 
         $(document).ready(function(){
-            var receiver = new cast.receiver.Receiver('23A303A5', ['ChromecastYoutube'],"",5);
-            var ytChannelHandler = new cast.receiver.ChannelHandler('ChromecastYoutube');
-            var channel;
-
-            ytChannelHandler.addChannelFactory(receiver.createChannelFactory('ChromecastYoutube'));
-            ytChannelHandler.addEventListener(
-                    cast.receiver.Channel.EventType.MESSAGE,
-                    onMessage.bind(this)
-            );
-
-            receiver.start();
-
-            window.addEventListener('load', function() {
-                    var tag = document.createElement('script');
-                    tag.src = "https://www.youtube.com/iframe_api";
-                    var firstScriptTag = document.getElementsByTagName('script')[0];
-                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-            });
 
             var player;
 
         ytMessages={
-                    "setChannel": function(event) { // this will preserve the channel socket so messages can go back and forth
-                            channel=event.target;
-                    },
-                    "playVideo": function() { // execute various YouTube commands when the corresponding messages are sent from the sender
-                            player.playVideo();
-                    },
-                    "pauseVideo": function() {
-                            player.pauseVideo();
-                    },
-                    "stopVideo": function() {
-                            player.stopVideo();
-                    },
-                    "getStatus": function() { // send the status back to the sender when requested
-                           channel.send({'event':'statusCheck','message':player.getPlayerState()});
-                    }
+            "playVideo": function() { // execute various YouTube commands when the corresponding messages are sent from the sender
+                    player.playVideo();
+            },
+            "pauseVideo": function() {
+                    player.pauseVideo();
+            },
+            "stopVideo": function() {
+                    player.stopVideo();
+            }
             };
         });
-
-        function onPlayerStateChange(event) {
-                channel.send({'event':'stateChange','message':event.data});
-                if (event.data==YT.PlayerState.ENDED) {
-                        endcast();
-                }
-        }
-
-        function onMessage(event) {
-                ytMessages[event.message](event);
-        }
-
-        function endcast() {
-                $("#wrapper").html("<div id='goodbye'>Thanks for Watching!</div>");
-                setTimeout(window.close, 8000);
-        }
 
         function onYouTubeIframeAPIReady() {
                 player = new YT.Player('player', {
                         height: 562,
                         width: 1000,
                         videoId: 'g5WB-p-QBJc',
-                        playerVars: { 'autoplay': 0, 'controls': 0 },
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
                         events: {
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange
