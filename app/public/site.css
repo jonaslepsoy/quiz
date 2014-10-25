@@ -40,11 +40,20 @@ form button {
 }
 
 label.label{
-    color: black;
     font-size: 100%;
 }
 
 input#username{
+}
+
+/* READY */
+.ready-screen{
+    margin-top: 40px;
+}
+
+/* READY */
+.waiting-screen{
+    margin-top: 40px;
 }
 
 /* ALTERNATIVES */

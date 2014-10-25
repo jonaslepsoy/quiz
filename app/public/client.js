@@ -58,12 +58,12 @@ var Join = React.createClass({
     render: function() {
         var name = this.state.name;
         return (
-            <div className="login-screen">
+            <div className="login-screen container">
+                <h3 className="center"><label htmlFor="username" className="label label-primary">Velg ditt brukernavn: </label></h3>
                 <div className="input-group center">
-                    <label htmlFor="username" className="label">Velg ditt brukernavn: </label>
                     <input id="username" className="username form-control" type="text" placeholder="Brukernavn" value={name} onChange={this.handleNameChanged}/>
                     <span className="input-group-btn">
-                        <button id="join" type="button" className="btn btn-primary" onClick={this.handleOnSubmit}>GO!</button>
+                        <button id="join" type="submit" className="btn btn-success" onClick={this.handleOnSubmit}>GO!</button>
                     </span>
                 </div>
             </div>
@@ -78,9 +78,9 @@ var Ready = React.createClass({
     },
     render: function() {
         return (
-            <div className="login-screen">
-                <div className="input-group center">
-                    <button id="ready" type="submit" className="btn btn-primary btn-lg" onClick={this.handleReady}>Ready!</button>
+            <div className="ready-screen container">
+                <div className="center">
+                    <button id="ready" type="submit" className="btn btn-primary btn-lg" onClick={this.handleReady}>Ready to rumble!</button>
                 </div>
             </div>
         );
@@ -90,9 +90,9 @@ var Ready = React.createClass({
 var Waiting = React.createClass({
     render: function() {
         return (
-            <div className="waiting-screen">
-                <div class="page-header center">
-                    <h1>Waiting</h1>
+            <div className="waiting-screen container">
+                <div className="center">
+                    <h1>Waiting..</h1>
                 </div>
             </div>
         );
