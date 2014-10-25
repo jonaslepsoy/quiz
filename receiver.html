@@ -703,6 +703,13 @@ limitations under the License.
                 });
         }
 
+        function onPlayerReady(event) {}
+
+        function onPlayerStateChange(event) {
+            session.send({'event':'stateChange','message':event.data});
+        }}
+
+
 
 </script>
 </body>
