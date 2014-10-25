@@ -36,7 +36,6 @@ party.games.forEach(function(game) {
     game.checkAnswer = checkAnswers[game.type];
 });
 
-var party = [quizGame, psychOutGame];
 var gameNumber = 0;
 var minPlayers = 1;
 
