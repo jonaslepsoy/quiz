@@ -258,7 +258,7 @@ limitations under the License.
             displayMessage(event['data']);
         }
 
-        // This class is used to send/receive media messages/events using the media protocol/namesapce (urn:x-cast:com.google.cast.media).
+        // This class is used to send/receive media messages/events using the media protocol/namespace (urn:x-cast:com.google.cast.media).
         window.mediaManager = new cast.receiver.MediaManager(window.mediaElement);
 
         /**
@@ -655,13 +655,9 @@ limitations under the License.
         }
 
         function displayMessage(message) {
-            $('#message').text(message);
+            $('#message').text(message.type);
         }
 
-        function displayVideo() {
-
-        }
-        
     </script>
 </body>
 </html>
