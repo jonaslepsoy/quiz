@@ -398,6 +398,9 @@ limitations under the License.
 
             /* Game round receives */
             if(payload.message.type == 'game') {
+                if(player !== null ) {
+                    player.clearVideo();
+                }
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
                 $('#question').text(game.question);
@@ -406,8 +409,6 @@ limitations under the License.
                 });
                 if (game.mediatype=='youtube') {
                     var videoId = game.media.substring(game.media.indexOf('?v=')+3);
-
-                    player.clearVideo();
 
                     player = new YT.Player('player', {
                         height: 600,
