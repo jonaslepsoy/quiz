@@ -3,8 +3,10 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var lodash = require('lodash');
 
-var players = {};
+var players = [];
+var scoreboard = {};
 var playerCount = 0;
 var ready = 0;
 
@@ -13,15 +15,15 @@ var psychOut = function(username) {
 };
 
 var quiz = function(answer) {
-    if(answer === 'red') {
-        return true;
-    }
-    return false;
+    var result = lodash.first(this.alternatives, function(alternative) {
+        return alternative.color === answer && alternative.valid;
+    });
+    return result !== null;
 };
 
 var quizGame = {
     type: "quiz",
-    text: "bsffldskgjsødlfgjsødlfjg sfdglkj",
+    question: "bsffldskgjsødlfgjsødlfjg sfdglkj",
     mediaUrl: "",
     alternatives: [],
     checkAnswer: quiz
@@ -75,7 +77,8 @@ io.on('connection', function(socket){
             score: 0,
             ready: false
         };
-        players[username] = player;
+        scoreboard[username] = player;
+        players.push(player);
         playerCount++;
         if(gameMaster) {
             gameMaster.emit('new player', {
@@ -92,7 +95,7 @@ io.on('connection', function(socket){
     socket.on('ready', function() {
         if(!socket.username) return;
         console.log(socket.username + ": " + 'ready');
-        var player = players[socket.username];
+        var player = scoreboard[socket.username];
         player.ready = true;
         nextGame(socket);
         if(gameMaster) {
@@ -107,7 +110,7 @@ io.on('connection', function(socket){
 
     socket.on('quiz answer', function(msg){
         if(!socket.username) return;
-        player = players[socket.username];
+        player = scoreboard[socket.username];
         console.log(player.username + ': ' + msg);
         quizResult = party[0].checkAnswer(msg);
         if(quizResult) {
@@ -118,7 +121,7 @@ io.on('connection', function(socket){
 
     socket.on('psych out answer', function(msg){
         if(!socket.username) return;
-        player = players[socket.username];
+        player = scoreboard[socket.username];
         console.log(player.username + ': ' + msg);
         party[1].checkAnswer(player.username);
     });
@@ -134,7 +137,7 @@ var chooseGame = function() {
 
 var nextGame = function(socket) {
     if(!socket.username) return;
-    player = players[socket.username];
+    player = scoreboard[socket.username];
     ready++;
     console.log('ready count: ' + ready + ' (minPlayers: ' + minPlayers + ', playerCount: ' + playerCount + ')');
     if(ready >= minPlayers && ready === playerCount) {
