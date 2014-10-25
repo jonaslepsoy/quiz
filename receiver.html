@@ -286,17 +286,15 @@ limitations under the License.
             }*/
 
 
-            console.log('event: ', event);
             console.log('event.data: ', event.data);
-            console.log('event.data[message]: ', event.data['message']);
-            console.log('event.data.message: ', event.data.message);
-            console.log('event.data.message.type: ', event.data.message.type);
-            /*console.log(event['data'].hasOwnProperty('player'));
-            if(event.data.hasOwnProperty('player')) {
+            console.log('event.data[message]: ', JSON.parse(event.data));
+            message = JSON.parse(event.data);
+
+            if(message.type == 'player') {
                 numberOfPlayers++;
                 $('#numberOfPlayers').text(numberOfPlayers);
                 $('#numberOfSpots').text(spots - numberOfPlayers);
-            }*/
+            }
 
             displayMessage(event['data']);
         }
