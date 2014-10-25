@@ -347,9 +347,10 @@ limitations under the License.
             if(payload.message.type == 'game') {
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
-                $('#question').text(game.question);
+                $('#question').text(game.question.text);
                 $.each(game.alternatives, function(index,element){
-                    $('#alternative' + (index + 1)).text(game.alternatives[index]);
+                    console.log(index);
+                    $('#alternative' + (index)).text(game.alternatives[index - 1]);
                 });
             }
 
