@@ -150,6 +150,9 @@ limitations under the License.
                 <video id="receiverVideoElement"></video>
                 <div id="player"></div>
             </div>
+            <div class="imagecontainer col-xs-6">
+                <img id="imageElement"/>
+            </div>
             <div id="alternatives col-xs-6">
                 <div id="alternative0">
                         svar alternativ nummer ..: hva var spørsmålet?
@@ -378,16 +381,12 @@ limitations under the License.
             if(payload.message.type == 'game') {
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
-                $('#question').text(game.question.text);
+                $('#question:first-child').text(game.question.text);
                 $.each(game.alternatives, function(index,element){
                     $('#alternative' + index).text(element.text);
                 });
                 if (game.mediatype=='youtube') {
-
                     var videoId = game.media.substring(game.media.indexOf('?v=')+3);
-                    console.log('videoId: ' , videoId);
-
-
 
                     player = new YT.Player('player', {
                         height: 600,
@@ -399,6 +398,9 @@ limitations under the License.
                                 'onStateChange': onPlayerStateChange
                         }
                     });
+                } else if (game.mediatype=='image'){
+                    console.log('Imagequiz');
+                    $('#imageelement').attr('src',game.media);
                 }
             }
 
