@@ -40,9 +40,11 @@ label.label{
     font-size: 100%;
 }
 
+input#username{
+}
+
 /* ALTERNATIVES */
 .alternatives{
-    margin-top: 40px;
 }
 
 button{

@@ -55,10 +55,12 @@ var Join = React.createClass({
         var name = this.state.name;
         return (
             <div className="login-screen">
-                <div className="input-group-lg">
+                <div className="input-group">
                     <label htmlFor="username" className="label">Velg ditt brukernavn: </label>
-                    <input id="username" className="username input-sm" type="text" placeholder="Brukernavn" value={name} onChange={this.handleNameChanged}/>
-                    <button id="join" type="submit" className="btn-sm" onClick={this.handleOnSubmit}>GO!</button>
+                    <input id="username" className="username form-control" type="text" placeholder="Brukernavn" value={name} onChange={this.handleNameChanged}/>
+                    <span class="input-group-btn">
+                        <button id="join" type="submit" className="btn btn-primary" onClick={this.handleOnSubmit}>GO!</button>
+                    </span>
                 </div>
             </div>
         );
@@ -74,7 +76,7 @@ var Ready = React.createClass({
         return (
             <div className="login-screen">
                 <div className="input-group-lg">
-                    <button id="ready" type="submit" className="btn-sm" onClick={this.handleReady}>Ready!</button>
+                    <button id="ready" type="submit" className="btn btn-primary btn-lg" onClick={this.handleReady}>Ready!</button>
                 </div>
             </div>
         );
