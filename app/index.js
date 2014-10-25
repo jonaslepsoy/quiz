@@ -3,8 +3,10 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var lodash = require('lodash');
 
-var players = {};
+var players = [];
+var scoreboard = {};
 var playerCount = 0;
 var ready = 0;
 
@@ -13,15 +15,15 @@ var psychOut = function(username) {
 };
 
 var quiz = function(answer) {
-    if(answer === 'red') {
-        return true;
-    }
-    return false;
+    var result = lodash.first(this.alternatives, function(alternative) {
+        return alternative.color === answer && alternative.valid;
+    });
+    return result !== null;
 };
 
 var quizGame = {
     type: "quiz",
-    text: "bsffldskgjsødlfgjsødlfjg sfdglkj",
+    question: "bsffldskgjsødlfgjsødlfjg sfdglkj",
     mediaUrl: "",
     alternatives: [],
     checkAnswer: quiz
@@ -34,7 +36,6 @@ var psychOutGame = {
 };
 
 var party = [quizGame, psychOutGame];
-var game = null;
 var gameNumber = 0;
 var minPlayers = 2;
 
@@ -61,7 +62,11 @@ io.on('connection', function(socket){
 
     socket.on('game master join', function(msg) {
         gameMaster = socket;
-        gameMaster.emit('players', players);
+        gameMaster.emit('players', {
+            minPlayers: minPlayers,
+            readyPlayers: ready,
+            players: players
+        });
         console.log('game master joined');
     });
 
@@ -69,25 +74,43 @@ io.on('connection', function(socket){
         socket.username = username;
         var player = {
             username: username,
-            score: 0
+            score: 0,
+            ready: false
         };
-        players[username] = player;
+        scoreboard[username] = player;
+        players.push(player);
         playerCount++;
         if(gameMaster) {
-            gameMaster.emit('new player', player);
+            gameMaster.emit('new player', {
+                newPlayer: player,
+                minPlayers: minPlayers,
+                readyPlayers: ready,
+                players: players
+            });
         }
         socket.emit('ready?', true);
         console.log(player);
     });
 
     socket.on('ready', function() {
-        console.log(socket.username + ": " + 'ready')
+        if(!socket.username) return;
+        console.log(socket.username + ": " + 'ready');
+        var player = scoreboard[socket.username];
+        player.ready = true;
         nextGame(socket);
+        if(gameMaster) {
+            gameMaster.emit('ready', {
+                newPlayer: player,
+                minPlayers: minPlayers,
+                readyPlayers: ready,
+                players: players
+            });
+        }
     });
 
     socket.on('quiz answer', function(msg){
         if(!socket.username) return;
-        player = players[socket.username];
+        player = scoreboard[socket.username];
         console.log(player.username + ': ' + msg);
         quizResult = party[0].checkAnswer(msg);
         if(quizResult) {
@@ -98,7 +121,7 @@ io.on('connection', function(socket){
 
     socket.on('psych out answer', function(msg){
         if(!socket.username) return;
-        player = players[socket.username];
+        player = scoreboard[socket.username];
         console.log(player.username + ': ' + msg);
         party[1].checkAnswer(player.username);
     });
@@ -114,7 +137,7 @@ var chooseGame = function() {
 
 var nextGame = function(socket) {
     if(!socket.username) return;
-    player = players[socket.username];
+    player = scoreboard[socket.username];
     ready++;
     console.log('ready count: ' + ready + ' (minPlayers: ' + minPlayers + ', playerCount: ' + playerCount + ')');
     if(ready >= minPlayers && ready === playerCount) {
