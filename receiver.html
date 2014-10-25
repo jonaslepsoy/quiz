@@ -42,7 +42,6 @@ limitations under the License.
     <script type="text/javascript">
       window.onload = function() {
         cast.receiver.logger.setLevelValue(0);
-
         window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
         console.log('Starting Receiver Manager');
         
@@ -75,7 +74,7 @@ limitations under the License.
         // create a CastMessageBus to handle messages for a custom namespace
         window.messageBus =
           window.castReceiverManager.getCastMessageBus(
-              'urn:x-cast:com.google.cast.receiver.castmessagebus');
+              'urn:x-cast:com.google.cast.sample.helloworld');
 
         // handler for the CastMessageBus message event
         window.messageBus.onMessage = function(event) {
