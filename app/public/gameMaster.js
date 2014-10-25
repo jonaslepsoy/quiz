@@ -29,24 +29,15 @@ socket.on('players', function(players) {
 });
 
 socket.on('new player', function(party) {
-    console.log('party');
-    console.log(party);
-
     players[party.newPlayer.username] = player;
     playersList.push(party.newPlayer);
     data.publish({players: playersList});
 
-    console.log('player');
-    console.log(player);
-    console.log('players');
-    console.log(players);
-
-
     var player = {
         message: {
             type: 'player',
-            username: player.username,
-            score: player.score
+            username: party.newPlayer.username,
+            score: party.newPlayer.score
         }
     };
     var party = {
@@ -57,8 +48,8 @@ socket.on('new player', function(party) {
             players: players.players
         }
     }
-    console.log('player: ' , player);
-    console.log('party: ' , party);
+    console.log('player: ', player);
+    console.log('party:', party)
     sendMessage(player);
     sendMessage(party);
 });

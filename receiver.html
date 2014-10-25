@@ -114,7 +114,7 @@ limitations under the License.
         <video id="receiverVideoElement"></video>
         <div id="player"></div>
     </div>
-</div>
+    </div>
 
 <script type="text/javascript">
         "use strict";
@@ -289,7 +289,6 @@ limitations under the License.
             if(payload.message.type == 'party') {
                 $('#numberOfPlayers').text(payload.message.players);
                 $('#numberOfReadyPlayers').text(payload.message.readyPlayers);
-                $('#lastPlayerJoined').text(payload.message.username + ' er med!!!');
             }
 
             /* New player joined */
