@@ -27,6 +27,10 @@ socket.on('ready?', function(mesg) {
     data.publish({mode: 'ready'});
 });
 
+socket.on('next?', function(mesg) {
+    data.publish({mode: 'next'});
+});
+
 socket.on('wait', function(msg) {
     data.publish({mode: 'wait'});
 });
@@ -95,7 +99,21 @@ var Waiting = React.createClass({
     }
 });
 
-var Next = null;
+var Next = React.createClass({
+    handleReady: function(e) {
+        socket.emit('next', true);
+        data.publish({mode: 'wait'});
+    },
+    render: function() {
+        return (
+            <div className="login-screen">
+                <div className="input-group-lg">
+                    <button id="ready" type="submit" className="btn btn-primary btn-lg" onClick={this.handleReady}>Next!</button>
+                </div>
+            </div>
+        );
+    }
+});
 
 var Quiz = React.createClass({
     handleClick: function(e) {
@@ -138,7 +156,7 @@ var GameClient = React.createClass({
     selectMode: function(mode) {
         var modeComponent = this.modes[mode];
         if(!modeComponent) {
-            modeComponent = modes.waiting;
+            modeComponent = modes.wait;
         }
         return modeComponent;
     },

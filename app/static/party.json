@@ -1,0 +1,29 @@
+{
+    "name": "Party, Party!",
+    "games": [
+        {
+            "type": "quiz",
+            "mediatype": "youtube",
+            "media": "https://www.youtube.com/watch?v=An2a1_Do_fc",
+            "question": "Sang og artist?",
+            "alternatives": [
+                {"text": "Neil Young - Heart of gold", "valid": false, "color": "blue"},
+                {"text": "Neil Young - Old man", "valid": true, "color": "red"},
+                {"text": "Bob Dylan - Knocking on heavens door", "valid": false, "color": "green"},
+                {"text": "Shaggy - Oh Carolina", "valid": false, "color": "yellow"}
+            ]
+        },
+        {
+            "type": "quiz",
+            "mediatype": "youtube",
+            "media": "https://www.youtube.com/watch?v=aQxcugbmg9M",
+            "question": "Hva drepte denne manne?",
+            "alternatives": [
+                {"text": "Pusekatt", "valid": false, "color": "blue"},
+                {"text": "Rokke", "valid": true, "color": "red"},
+                {"text": "Hest", "valid": false, "color": "green"},
+                {"text": "Mora di!", "valid": false, "color": "yellow"}
+            ]
+        }
+    ]
+}

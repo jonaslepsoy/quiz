@@ -4,11 +4,17 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
 var lodash = require('lodash');
+var fs = require('fs');
 
 var players = [];
 var scoreboard = {};
 var playerCount = 0;
 var ready = 0;
+var gameNumber = 0;
+var minPlayers = 2;
+var gameMaster = null;
+var party = JSON.parse(fs.readFileSync(path.join(__dirname, 'static/party.json'), 'utf8'));
+var currentGame = {};
 
 var psychOut = function(username) {
 
@@ -21,25 +27,19 @@ var quiz = function(answer) {
     return result !== null;
 };
 
-var quizGame = {
-    type: "quiz",
-    question: "bsffldskgjsødlfgjsødlfjg sfdglkj",
-    mediaUrl: "",
-    alternatives: [],
-    checkAnswer: quiz
+var checkAnswers = {
+    quiz: quiz,
+    psychOut: psychOut
 };
 
-var psychOutGame = {
-    type: "psychOut",
-    text: "Don't push the button first or last",
-    checkAnswer: psychOut
-};
+party.games.forEach(function(game) {
+    game.checkAnswer = checkAnswers[game.type];
+});
 
 var party = [quizGame, psychOutGame];
 var gameNumber = 0;
 var minPlayers = 1;
 
-var gameMaster = null;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res){
@@ -112,18 +112,23 @@ io.on('connection', function(socket){
         if(!socket.username) return;
         player = scoreboard[socket.username];
         console.log(player.username + ': ' + msg);
-        quizResult = party[0].checkAnswer(msg);
-        if(quizResult) {
+        if(currentGame.game.checkAnswer(msg)) {
             player.score++;
+            currentGame.winners.push(player);
+        } else {
+            currentGame.loosers.push(player);
         }
-        socket.emit('quiz result', quizResult);
+        if((currentGame.winners.length + currentGame.loosers.length) === playerCount) {
+            gameMaster.emit('update scoreboard', {currentGame: currentGame, players: players});
+            io.sockets.emit('next?', true);
+        }
     });
 
     socket.on('psych out answer', function(msg){
         if(!socket.username) return;
         player = scoreboard[socket.username];
         console.log(player.username + ': ' + msg);
-        party[1].checkAnswer(player.username);
+        currentGame.game.checkAnswer(player.username);
     });
 
     socket.on('next', function() {
@@ -132,7 +137,11 @@ io.on('connection', function(socket){
 });
 
 var chooseGame = function() {
-    return party[gameNumber++];
+    return {
+                game: party.games[gameNumber++],
+                winners: [],
+                loosers: []
+            };
 };
 
 var nextGame = function(socket) {
@@ -142,11 +151,11 @@ var nextGame = function(socket) {
     console.log('ready count: ' + ready + ' (minPlayers: ' + minPlayers + ', playerCount: ' + playerCount + ')');
     if(ready >= minPlayers && ready === playerCount) {
         ready = 0;
-        game = chooseGame();
-        if(game) {
-            console.log('start game: ' + game.type);
-            io.sockets.emit('next game', game.type);
-            gameMaster.emit('start game', game);
+        currentGame = chooseGame();
+        if(currentGame) {
+            console.log('start game: ' + currentGame.game.type);
+            io.sockets.emit('next game', currentGame.game.type);
+            gameMaster.emit('start game', currentGame);
         } else {
             console.log('party is over');
             socket.broadcast.emit("game over", players);
