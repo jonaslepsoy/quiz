@@ -22,7 +22,7 @@ function init(appid) {
 }
 
 function initializeCastApi(appid) {
-    var applicationID = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;;
+    var applicationID = appid;
     var sessionRequest = new chrome.cast.SessionRequest(applicationID);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest,
     sessionListener,
