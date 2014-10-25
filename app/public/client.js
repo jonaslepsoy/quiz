@@ -111,6 +111,16 @@ var Quiz = React.createClass({
     }
 });
 
+var PsychOut = React.createClass({
+   handleClick: function(e){
+       socket.emit('psych out answer', true);
+       data.publish({mode: 'wait'});
+   },
+    render: function(){
+        return <button className="col-xs-12" onClick={this.handleClick}></button>
+    }
+});
+
 
 var GameClient = React.createClass({
     modes: {
