@@ -31,7 +31,7 @@ $(document).ready(function () {
         var message = {
             message: {
                 type: 'qr',
-                qr: $('#qrCode')
+                qr: $('#qrCode').val()
             }
         }
         sendMessage(message);
