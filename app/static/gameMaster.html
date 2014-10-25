@@ -4,14 +4,24 @@
         <title>Socket.IO chat</title>
 
 
-        <link rel="stylesheet" href="../public/site.css"/>
-        <link rel="stylesheet" href="../public/bootstrap.min.css">
+        <link rel="stylesheet" href="/site.css"/>
+        <link rel="stylesheet" href="/bootstrap.min.css">
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+        <script type="text/javascript" src="/script.js"></script>
     </head>
     <body>
-        <div class="startup col-xs-12 clearfix">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <button type="button" id="init">Initialize App</button>
+            <button type="button" id="castme" style="display:none">Cast</button>
+            <button type="button" id="stop" style="display:none">Stop</button>
+            <input name="appid" class="form-control hidden" type="text" id="appid" value="23A303A5"/>
+        </div>
+    </nav>
+    <div class="startup col-xs-12 clearfix">
             <div class="qr col-xs-6">
                 <img class="qr-code" src="http://img2.wikia.nocookie.net/__cb20130720012650/despicableme/images/1/18/Minion_dave.jpg"/>
             </div>

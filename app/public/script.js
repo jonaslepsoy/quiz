@@ -8,6 +8,15 @@ $(document).ready(function () {
        init($('#appid').val());
     });
 
+    $('#castme').click(function () {
+        console.log('yes');
+        launchApp();
+    });
+
+    $('#stop').click(function () {
+        stopApp();
+    });
+
 });
 
 function init(appid) {
@@ -44,6 +53,9 @@ function sessionListener(e) {
 function receiverListener(e) {
     if (e === 'available') {
         console.log("Chromecast was found on the network.");
+        $("#init").hide();
+        $("#castme").show();
+        $("#stop").hide();
     } else {
         console.log("There are no Chromecasts available.");
     }
@@ -57,10 +69,6 @@ function onInitError() {
     console.log("Initialization failed");
 }
 
-$('#castme').click(function () {
-    launchApp();
-});
-
 function launchApp() {
     console.log("Launching the Chromecast App...");
     chrome.cast.requestSession(onRequestSessionSuccess, onLaunchError);
@@ -69,6 +77,8 @@ function launchApp() {
 function onRequestSessionSuccess(e) {
     console.log("Successfully created session: " + e.sessionId);
     session = e;
+    $("#castme").hide();
+    $("#stop").show();
 }
 
 function onLaunchError() {
@@ -83,15 +93,13 @@ function onLoadError() {
     console.log('Failed to load image.');
 }
 
-$('#stop').click(function () {
-    stopApp();
-});
-
 function stopApp() {
     session.stop(onStopAppSuccess, onStopAppError);
 }
 
 function onStopAppSuccess() {
+    $("#castme").show();
+    $("#stop").hide();
     console.log('Successfully stopped app.');
 }
 
