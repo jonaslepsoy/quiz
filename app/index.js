@@ -37,7 +37,7 @@ var psychOutGame = {
 
 var party = [quizGame, psychOutGame];
 var gameNumber = 0;
-var minPlayers = 2;
+var minPlayers = 1;
 
 var gameMaster = null;
 
