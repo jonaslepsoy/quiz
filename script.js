@@ -1,5 +1,5 @@
 var session = null;
-var namespace = 'urn:x-cast:com.google.cast.quiz';
+var namespace = 'urn:x-cast:com.google.devrel';
 
 $(document).ready(function () {
     $('#init').on('click',function(){
