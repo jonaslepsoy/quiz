@@ -14,19 +14,6 @@ var data = {
             this.listeners.splice(index, 1);
         }
     },
-    search: function(options) {
-        var self = this;
-        var uri = '/api/search';
-        uri = uri + '?q=' + options.q;
-        $.ajax({
-            url: uri,
-            dataType: 'json',
-            success: function(data) {
-                data.query = options;
-                self.publish(data);
-            }
-        });
-    },
     publish: function(data) {
         this.listeners.forEach(function(listener) {
             listener(data);

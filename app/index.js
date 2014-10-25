@@ -36,6 +36,7 @@ var psychOutGame = {
 var party = [quizGame, psychOutGame];
 var game = null;
 var gameNumber = 0;
+var minPlayers = 2;
 
 var gameMaster = null;
 
@@ -52,6 +53,9 @@ io.on('connection', function(socket){
     console.log('a user connected');
     socket.on('disconnect', function(){
         playerCount--;
+        if(playerCount < 0) {
+            playerCount = 0;
+        }
         console.log('user disconnected');
     });
 
@@ -72,7 +76,13 @@ io.on('connection', function(socket){
         if(gameMaster) {
             gameMaster.emit('new player', player);
         }
+        socket.emit('ready?', true);
         console.log(player);
+    });
+
+    socket.on('ready', function() {
+        console.log(socket.username + ": " + 'ready')
+        nextGame(socket);
     });
 
     socket.on('quiz answer', function(msg){
@@ -94,20 +104,34 @@ io.on('connection', function(socket){
     });
 
     socket.on('next', function() {
-        if(!socket.username) return;
-        player = players[socket.username];
-        ready++;
-        if(ready >= playersCount) {
-            game = party[gameNumber++];
-            if(game) {
-                socket.broadcast.emit("next game", game.type);
-                gameMaster.emit('start game', game);
-            } else {
-                socket.broadcast.emit("game over", players);
-            }
-        }
+        nextGame(socket);
     });
 });
+
+var chooseGame = function() {
+    return party[gameNumber++];
+};
+
+var nextGame = function(socket) {
+    if(!socket.username) return;
+    player = players[socket.username];
+    ready++;
+    console.log('ready count: ' + ready + ' (minPlayers: ' + minPlayers + ', playerCount: ' + playerCount + ')');
+    if(ready >= minPlayers && ready === playerCount) {
+        ready = 0;
+        game = chooseGame();
+        if(game) {
+            console.log('start game: ' + game.type);
+            io.sockets.emit('next game', game.type);
+            gameMaster.emit('start game', game);
+        } else {
+            console.log('party is over');
+            socket.broadcast.emit("game over", players);
+        }
+    } else {
+        console.log(socket.username + ': wait');
+    }
+};
 
 http.listen(8080, function(){
     console.log('listening on *:8080');
