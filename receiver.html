@@ -117,17 +117,17 @@ limitations under the License.
             Spørsmål
         </div>
     </h1>
-    <div id="alternatives">
-        <div id="alternative1">
+    <div id="alternatives" style="width:200px">
+        <div id="alternative0">
             Alternativ 1
         </div>
-        <div id="alternative2">
+        <div id="alternative1">
             Alternativ 2
         </div>
-        <div id="alternative3">
+        <div id="alternative2">
             Alternativ 3
         </div>
-        <div id="alternative4">
+        <div id="alternative3">
             Alternativ 4
         </div>
     </div>
@@ -350,7 +350,7 @@ limitations under the License.
                 $('#question').text(game.question.text);
                 $.each(game.alternatives, function(index,element){
                     console.log(index);
-                    $('#alternative' + (index)).text(game.alternatives[index - 1]);
+                    $('#alternative' + index).text(game.alternatives[index].text);
                 });
             }
 
