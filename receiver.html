@@ -345,6 +345,7 @@ limitations under the License.
 
             /* Game round receives */
             if(payload.message.type == 'game') {
+                $('#game').show();
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
                 $('#question').text(game.question);
