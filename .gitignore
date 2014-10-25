@@ -1,3 +1,9 @@
+node_modules/
+public/components
+.sass-cache
+.DS_store
+.idea/
+
 # Logs
 logs
 *.log
