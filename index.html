@@ -19,5 +19,12 @@
 
         <script type="text/javascript" src="script.js"></script>
         <img id="thumb"/>
+        <button type="button" onclick="youtube()">Youtube?</button>
+        <div>
+            <button ng-click="ytPlaybackCmd('playVideo')">Play</button><br/>
+            <button ng-click="ytPlaybackCmd('pauseVideo')">Pause</button><br/>
+            <button ng-click="ytPlaybackCmd('stopVideo')">Stop</button><br/>
+            <button ng-click="ytPlaybackCmd('getStatus')">Status</button>
+        </div>
     </body>
 </html>
