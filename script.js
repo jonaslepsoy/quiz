@@ -1,4 +1,5 @@
 var session = null;
+var namespace = 'urn:x-cast:com.google.devrel';
 
 $(document).ready(function () {
     $('#init').on('click',function(){
@@ -34,6 +35,8 @@ function sessionListener(e) {
     if (session.media.length != 0) {
         console.log('Found ' + session.media.length + ' sessions.');
     }
+    session.addUpdateListener(sessionUpdateListener);
+    session.addMessageListener(namespace, receiverMessage);
 }
 
 function receiverListener(e) {
@@ -70,11 +73,6 @@ function onLaunchError() {
     console.log("Error connecting to the Chromecast.");
 }
 
-function onRequestSessionSuccess(e) {
-    console.log("Successfully created session: " + e.sessionId);
-    session = e;
-}
-
 function onLoadSuccess() {
     console.log('Successfully loaded image.');
 }
@@ -97,4 +95,57 @@ function onStopAppSuccess() {
 
 function onStopAppError() {
     console.log('Error stopping app.');
+}
+
+/**
+ * send a message to the receiver using the custom namespace
+ * receiver CastMessageBus message handler will be invoked
+ * @param {string} message A message string
+ */
+function sendMessage(message) {
+    if (session!=null) {
+        session.sendMessage(namespace, message, onSuccess.bind(this, "Message sent: " + message), onError);
+    }
+    else {
+        chrome.cast.requestSession(function(e) {
+            session = e;
+            session.sendMessage(namespace, message, onSuccess.bind(this, "Message sent: " + message), onError);
+        }, onError);
+    }
+}
+
+/**
+ * utility function to handle text typed in by user in the input field
+ */
+function update() {
+    sendMessage(document.getElementById("input").value);
+}
+
+/**
+ * generic success callback
+ */
+function onSuccess(message) {
+    appendMessage("onSuccess: "+message);
+}
+
+/**
+ * append message to debug message window
+ * @param {string} message A message string
+ */
+function appendMessage(message) {
+    console.log(message);
+};
+
+/**
+ * initialization success callback
+ */
+function onInitSuccess() {
+    appendMessage("onInitSuccess");
+}
+
+/**
+ * initialization error callback
+ */
+function onError(message) {
+    appendMessage("onError: "+JSON.stringify(message));
 }

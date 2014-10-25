@@ -25,6 +25,7 @@ limitations under the License.
         Cast Media Library
     -->
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
     <style>
         body {
@@ -32,7 +33,7 @@ limitations under the License.
         }
         video {
             height:auto;
-            width:100%;
+            width:50%;
             text-align: center;
             border:0px solid silver;
             display: table-cell;
@@ -66,7 +67,6 @@ limitations under the License.
 <body>
     <div id="messages">
         <div id="title">Sample Media Receiver HUD</div>
-        <div>Men hva skjer når jeg dytter inn noe annet?</div>
         <div>Application State: <span id="applicationState">-</span></div>
         <div>Session Count: <span id="sessionCount">0</span></div>
         <div>Media Element State: <span  id="mediaElementState">-</span></div>
@@ -77,6 +77,7 @@ limitations under the License.
         <div>Host State: <span id="mediaHostState">Unknown</span></div>
         <div>Media Type: <span id="mediaType">Unkown</span></div>
         <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
+        <div>Message: <span id="message">No message</span> </div>
         <img src="http://chart.apis.google.com/chart?cht=qr&amp;chs=300x300&amp;chl=http%3A//niels-henriks-boks.com&amp;chld=H|0" alt="QR Code"/>
     </div>
     <video id="receiverVideoElement"></video>
@@ -141,6 +142,7 @@ limitations under the License.
             console.log("### Cast Receiver Manager is READY: " + JSON.stringify(event));
             setHudMessage('castReceiverManagerMessage', 'READY: ' + JSON.stringify(event));
             setHudMessage('applicationState','Loaded. Started. Ready.');
+            startQuiz();
         }
 
         /**
@@ -230,7 +232,7 @@ limitations under the License.
          * You can check the cast.receiver.CastMessageBus.MessageType that a message bus processes though a call
          * to getMessageType. As well, you get the namespace of a message bus by calling getNamespace()
          */
-        window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:com.google.devrel.custom');
+        window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:com.google.devrel');
         /**
          * The namespace urn:x-cast:com.google.devrel.custom is used to identify the protocol of showing/hiding
          * the heads up display messages (The messages defined at the beginning of the html).
@@ -245,11 +247,12 @@ limitations under the License.
             console.log("### CUSTOM MESSAGE: " + JSON.stringify(event));
             // show/hide messages
             console.log(event['data']);
-            if(event['data']==='show') {
+            /*if(event['data']==='show') {
                 document.getElementById('messages').style.display = 'block';
             } else {
                 document.getElementById('messages').style.display = 'none';
-            }
+            }*/
+            displayMessage(event['data']);
         }
 
         // This class is used to send/receive media messages/events using the media protocol/namesapce (urn:x-cast:com.google.cast.media).
@@ -644,6 +647,14 @@ limitations under the License.
         });
 
         // Add your app logic here after the receiver SDK has been initialized.
+        function startQuiz() {
+
+        }
+
+        function displayMessage(message) {
+            $('#message').text(message);
+        }
+        
     </script>
 </body>
 </html>
