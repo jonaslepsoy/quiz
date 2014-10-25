@@ -63,27 +63,27 @@ video {
     font-weight: normal;
 }
 
-.game {
+#game {
     color: lightgray;
    /* display: none;*/
 }
 
-#alternative1 {
+#alternative0 {
     background:blue;
 
 }
 
-#alternative2 {
+#alternative1 {
     background:red;
     color: lightgray;
 }
 
-#alternative3 {
+#alternative2 {
     background:green;
     color: lightgray;
 }
 
-#alternative4 {
+#alternative3 {
     background:yellow;
     color: #000000;
 }

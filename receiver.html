@@ -16,11 +16,11 @@ limitations under the License.
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <title>Sample Media Receiver</title>
+    <title>QuizClient</title>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="app/public/site.css"/>
-    <link rel="stylesheet" href="app/public/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+
     <!--
         Cast APIs
     -->
@@ -31,6 +31,96 @@ limitations under the License.
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/mediaplayer/0.7.0/media_player.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//www.youtube.com/iframe_api"></script>
+    <style>
+        body.background{
+            overflow:hidden;
+            margin:0;
+            padding:0;
+            background:black;
+        }
+
+        .textcontainer{
+            margin-top: 40px;
+        }
+
+
+        .qr-code{
+            margin: 20px 0;
+        }
+
+        h4{
+            margin-bottom: 10px;
+        }
+
+        .videocontainer {
+            width:50%;
+            float:right;
+            height:100%;
+            background:#000000;
+            padding-left: 0;
+        }
+
+        video {
+            height:auto;
+            width:100%;
+            border:0px solid silver;
+            background-color: #000000;
+        }
+
+        #welcome {
+            text-align:center;
+        }
+
+        .messagecontainer, .textcontainer{
+            background-color: rgba(0,0,0,0.5);
+            display:block;
+            color:white;
+        }
+
+        .messagecontainer {
+            width:50%;
+            height:100%;
+            float: left;
+            background-color: rgba(0,0,0,0.5);
+            display:block;
+        }
+
+        #messages {
+            padding: 1em;
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+
+        #messages span {
+            font-weight: normal;
+        }
+
+        #game {
+            color: lightgray;
+            display: none;
+        }
+
+        #alternative0 {
+            background:blue;
+
+        }
+
+        #alternative1 {
+            background:red;
+            color: lightgray;
+        }
+
+        #alternative2 {
+            background:green;
+            color: lightgray;
+        }
+
+        #alternative3 {
+            background:yellow;
+            color: #000000;
+        }
+
+    </style>
 </head>
 <body class="background">
 <div class="container">
@@ -51,7 +141,7 @@ limitations under the License.
             <h4><div id="playerlist"></div></h4>
         </div>
     </div>
-    <div class="game">
+    <div id="game">
         <div id="question" class="col-xs-12">
             <h1>dette er et spørsmål, som jeg trenger svar på.. uten spørsmålstegn.. jeg trenger svaralternativer for å kunne svare.. hjelp.. </h1>
         </div>
@@ -61,16 +151,16 @@ limitations under the License.
                 <div id="player"></div>
             </div>
             <div id="alternatives col-xs-6">
-                <div id="alternative1">
+                <div id="alternative0">
                         svar alternativ nummer ..: hva var spørsmålet?
                 </div>
-                <div id="alternative2">
+                <div id="alternative1">
                     svar alternativ nummer ..: hva var spørsmålet? svar alternativ nummer ..: hva var spørsmålet?
                 </div>
-                <div id="alternative3">
+                <div id="alternative2">
                     svar alternativ nummer ..:
                 </div>
-                <div id="alternative4">
+                <div id="alternative3">
                     svar alternativ nummer ..: hva var spørsmålet?svar alternativ nummer ..: hva var spørsmålet?svar alternativ nummer ..:
                 </div>
             </div>
@@ -286,11 +376,30 @@ limitations under the License.
 
             /* Game round receives */
             if(payload.message.type == 'game') {
-                console.log(payload.message);
-                $('#question').text(payload.message.game.question);
-                $.each(payload.message.game.alternatives, function(index,element){
-                    $('#alternative' + (index + 1)).text(payload.message.game.alternatives[index]);
+                console.log('game',payload.message.game.game);
+                var game = payload.message.game.game;
+                $('#question').text(game.question.text);
+                $.each(game.alternatives, function(index,element){
+                    $('#alternative' + index).text(element.text);
                 });
+                if (game.mediatype=='youtube') {
+
+                    var videoId = game.media.substring(game.media.indexOf('?v=')+3);
+                    console.log('videoId: ' , videoId);
+
+
+
+                    player = new YT.Player('player', {
+                        height: 600,
+                        width: 400,
+                        videoId: videoId,
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
+                        events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                        }
+                    });
+                }
             }
 
             displayMessage(event['data']);
@@ -714,7 +823,7 @@ limitations under the License.
                         height: 600,
                         width: 400,
                         videoId: videoId,
-                        playerVars: { 'autoplay': 0, 'controls': 0 },
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
                         events: {
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange
