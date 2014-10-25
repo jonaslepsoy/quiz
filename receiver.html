@@ -287,11 +287,11 @@ limitations under the License.
 
             console.log(event);
             console.log(event.data.player.type);
-            if(event['data'].player.type=='player') {
+            /*if(event['data'].player.type == 'player') {
                 numberOfPlayers++;
                 $('#numberOfPlayers').text(numberOfPlayers);
                 $('#numberOfSpots').text(spots - numberOfPlayers);
-            }
+            }*/
 
             displayMessage(event['data']);
         }
