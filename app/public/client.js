@@ -25,7 +25,6 @@ socket.on('quiz result', function(msg){
 
 var joined = false;
 socket.on('ready?', function(mesg) {
-    joined = true;
     data.publish({mode: 'ready'});
 });
 
@@ -45,6 +44,7 @@ socket.on('next game', function(gameType) {
 socket.on('game over', function(players) {
     data.publish({mode: 'gameOver'});
     socket.emit('leave', true);
+    joined = false;
 });
 
 var Join = React.createClass({
@@ -58,6 +58,7 @@ var Join = React.createClass({
     },
     handleOnSubmit: function(e) {
         if(this.state.name) {
+            joined = true;
             socket.emit('join', this.state.name);
         }
     },
@@ -174,7 +175,7 @@ var GameClient = React.createClass({
     },
     selectMode: function(mode) {
         if(joined) {
-        var modeComponent = this.modes[mode];
+            var modeComponent = this.modes[mode];
             if(!modeComponent) {
                 console.err(mode + ' not found');
                 modeComponent = this.modes.wait;
