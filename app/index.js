@@ -34,7 +34,6 @@ var psychOutGame = {
 };
 
 var party = [quizGame, psychOutGame];
-var game = null;
 var gameNumber = 0;
 var minPlayers = 2;
 
@@ -61,7 +60,11 @@ io.on('connection', function(socket){
 
     socket.on('game master join', function(msg) {
         gameMaster = socket;
-        gameMaster.emit('players', players);
+        gameMaster.emit('players', {
+            minPlayers: minPlayers,
+            readyPlayers: ready,
+            players: players
+        });
         console.log('game master joined');
     });
 
@@ -69,20 +72,37 @@ io.on('connection', function(socket){
         socket.username = username;
         var player = {
             username: username,
-            score: 0
+            score: 0,
+            ready: false
         };
         players[username] = player;
         playerCount++;
         if(gameMaster) {
-            gameMaster.emit('new player', player);
+            gameMaster.emit('new player', {
+                newPlayer: player,
+                minPlayers: minPlayers,
+                readyPlayers: ready,
+                players: players
+            });
         }
         socket.emit('ready?', true);
         console.log(player);
     });
 
     socket.on('ready', function() {
-        console.log(socket.username + ": " + 'ready')
+        if(!socket.username) return;
+        console.log(socket.username + ": " + 'ready');
+        var player = players[socket.username];
+        player.ready = true;
         nextGame(socket);
+        if(gameMaster) {
+            gameMaster.emit('ready', {
+                newPlayer: player,
+                minPlayers: minPlayers,
+                readyPlayers: ready,
+                players: players
+            });
+        }
     });
 
     socket.on('quiz answer', function(msg){
