@@ -32,7 +32,7 @@ limitations under the License.
         }
         video {
             height:auto;
-            width:100%;
+            width:50%;
             text-align: center;
             border:0px solid silver;
             display: table-cell;
@@ -66,7 +66,6 @@ limitations under the License.
 <body>
     <div id="messages">
         <div id="title">Sample Media Receiver HUD</div>
-        <div>Men hva skjer når jeg dytter inn noe annet?</div>
         <div>Application State: <span id="applicationState">-</span></div>
         <div>Session Count: <span id="sessionCount">0</span></div>
         <div>Media Element State: <span  id="mediaElementState">-</span></div>
@@ -141,6 +140,7 @@ limitations under the License.
             console.log("### Cast Receiver Manager is READY: " + JSON.stringify(event));
             setHudMessage('castReceiverManagerMessage', 'READY: ' + JSON.stringify(event));
             setHudMessage('applicationState','Loaded. Started. Ready.');
+            startQuiz();
         }
 
         /**
@@ -230,7 +230,7 @@ limitations under the License.
          * You can check the cast.receiver.CastMessageBus.MessageType that a message bus processes though a call
          * to getMessageType. As well, you get the namespace of a message bus by calling getNamespace()
          */
-        window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:com.google.devrel.custom');
+        window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:com.google.cast.quiz');
         /**
          * The namespace urn:x-cast:com.google.devrel.custom is used to identify the protocol of showing/hiding
          * the heads up display messages (The messages defined at the beginning of the html).
@@ -644,6 +644,10 @@ limitations under the License.
         });
 
         // Add your app logic here after the receiver SDK has been initialized.
+        function startQuiz() {
+
+        }
+        
     </script>
 </body>
 </html>
