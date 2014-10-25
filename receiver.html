@@ -75,19 +75,22 @@ limitations under the License.
         .game {
             color:grey;
         }
-        #alternative1 {
+        #question {
+            color:white;
+        }
+        #alternative0 {
             background:blue;
             color: black;
         }
-        #alternative2 {
+        #alternative1 {
             background:red;
             color: black;
         }
-        #alternative3 {
+        #alternative2 {
             background:green;
             color: white;
         }
-        #alternative4 {
+        #alternative3 {
             background:yellow;
             color: black;
         }
@@ -351,6 +354,21 @@ limitations under the License.
                 $.each(game.alternatives, function(index,element){
                     $('#alternative' + index).text(element.text);
                 });
+                if(game.mediatype=='youtube') {
+
+                    var videoId = game.media.substring(game.media.indexOf('?v=')+3);
+                    console.log('videoId: ' , videoId);
+
+                    player = new YT.Player('player', {
+                        height: 600,
+                        width: 400,
+                        videoId: videoId,
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
+                        events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                        }
+                }
 
             }
 
@@ -775,7 +793,7 @@ limitations under the License.
                         height: 600,
                         width: 400,
                         videoId: videoId,
-                        playerVars: { 'autoplay': 0, 'controls': 0 },
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
                         events: {
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange
