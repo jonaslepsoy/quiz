@@ -383,7 +383,7 @@ limitations under the License.
             if(payload.message.type == 'game') {
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
-                $('#question').text(game.question.text);
+                $('#question').text(game.question);
                 $.each(game.alternatives, function(index,element){
                     $('#alternative' + index).text(element.text);
                 });
