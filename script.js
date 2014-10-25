@@ -551,18 +551,18 @@ function q1(){
     console.log("Question: " , question);
 }
 
-    function youtube(){
-        cast_api.sendMessage(session.activity.activityId,"ChromecastYoutube","setChannel");
-        cast_api.addMessageListener(session.activity.activityId,"ChromecastYoutube",function(msg) {
-                if (msg.event=="stateChange") {
-                        session.player.status=msg.message;
-                }
-        });
-    }
+function youtube(){
+    cast_api.sendMessage(session.activity.activityId,"ChromecastYoutube","setChannel");
+    cast_api.addMessageListener(session.activity.activityId,"ChromecastYoutube",function(msg) {
+            if (msg.event=="stateChange") {
+                    session.player.status=msg.message;
+            }
+    });
+}
 
-session.ytPlaybackCmd = function(message) {
+function ytPlaybackCmd(message) {
     if (!$scope.activity.activityId) {
       return;
     }
-    cast_api.sendMessage($scope.activity.activityId,"ChromecastYoutube",message);
+    cast_api.sendMessage(session.activity.activityId,"ChromecastYoutube",message);
 };

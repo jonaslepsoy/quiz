@@ -695,7 +695,7 @@ limitations under the License.
 
             var player;
 
-    ytMessages={
+        ytMessages={
                     "setChannel": function(event) { // this will preserve the channel socket so messages can go back and forth
                             channel=event.target;
                     },
@@ -712,7 +712,7 @@ limitations under the License.
                            channel.send({'event':'statusCheck','message':player.getPlayerState()});
                     }
             };
-        }
+        });
 
         function onPlayerStateChange(event) {
                 channel.send({'event':'stateChange','message':event.data});
