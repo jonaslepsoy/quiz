@@ -285,7 +285,10 @@ limitations under the License.
                 document.getElementById('messages').style.display = 'none';
             }*/
 
-            console.log(event['data'].message.type);
+            console.log(event);
+            console.log(event.data);
+            console.log(event.data.message);
+            console.log(event.data.message.type);
             /*console.log(event['data'].hasOwnProperty('player'));
             if(event.data.hasOwnProperty('player')) {
                 numberOfPlayers++;
