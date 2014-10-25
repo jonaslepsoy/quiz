@@ -24,9 +24,7 @@ function init(appid) {
 function initializeCastApi(appid) {
     var applicationID = appid;
     var sessionRequest = new chrome.cast.SessionRequest(applicationID);
-    var apiConfig = new chrome.cast.ApiConfig(sessionRequest,
-    sessionListener,
-    receiverListener);
+    var apiConfig = new chrome.cast.ApiConfig(sessionRequest,sessionListener,receiverListener);
     chrome.cast.initialize(apiConfig, onInitSuccess, onInitError);
 };
 
@@ -75,23 +73,6 @@ function onLaunchError() {
 function onRequestSessionSuccess(e) {
     console.log("Successfully created session: " + e.sessionId);
     session = e;
-    loadMedia();
-}
-
-function loadMedia() {
-    if (! session) {
-        console.log("No session.");
-        return;
-    }
-    
-    var mediaInfo = new
-    chrome.cast.media.MediaInfo('http://i.imgur.com/IFD14.jpg');
-    mediaInfo.contentType = 'image/jpg';
-    
-    var request = new chrome.cast.media.LoadRequest(mediaInfo);
-    request.autoplay = true;
-    
-    session.loadMedia(request, onLoadSuccess, onLoadError);
 }
 
 function onLoadSuccess() {
