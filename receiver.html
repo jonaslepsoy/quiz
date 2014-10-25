@@ -407,7 +407,8 @@ limitations under the License.
                 if (game.mediatype=='youtube') {
                     var videoId = game.media.substring(game.media.indexOf('?v=')+3);
 
-                    $('#player').children().remove();
+                    player.clearVideo();
+
                     player = new YT.Player('player', {
                         height: 600,
                         width: 400,
