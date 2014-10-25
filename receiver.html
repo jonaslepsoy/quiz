@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
-    <title>Sample Media Receiver</title>
+    <title>QuizClient</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+
     <!--
         Cast APIs
     -->
@@ -28,128 +32,179 @@ limitations under the License.
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="//www.youtube.com/iframe_api"></script>
     <style>
-        body {
-        overflow:hidden;
-        margin:0;
-        padding:0;
-        background:black;
+        body.background{
+            overflow:hidden;
+            margin:0;
+            padding:0;
+            background:black;
         }
+
+        .textcontainer{
+            margin-top: 40px;
+
+        }
+
+
+        .qr-code{
+            margin: 20px 0;
+        }
+
+        h4{
+            margin-bottom: 10px;
+        }
+
         .videocontainer {
-        width:50%;
-        float:right;
-        height:100%;
-        background:black;
+            width:50%;
+            height:100%;
+            background:#000000;
+            padding-left: 0;
         }
+
         video {
-        height:auto;
-        width:100%;
-        border:0px solid silver;
-        background-color: #000000;
+            height:auto;
+            width:100%;
+            border:0px solid silver;
+            background-color: #000000;
         }
+
         #welcome {
-            text-align:center
+            text-align:center;
         }
+
         .messagecontainer, .textcontainer{
             background-color: rgba(0,0,0,0.5);
             display:block;
             color:white;
         }
+
         .messagecontainer {
-        width:50%;
-        height:100%;
-        float: left;
-        background-color: rgba(0,0,0,0.5);
-        display:block;
+            width:50%;
+            height:100%;
+            float: left;
+            background-color: rgba(0,0,0,0.5);
+            display:block;
         }
 
         #messages {
-        padding: 1em;
-        color: #FFFFFF;
-        font-weight: bold;
+            padding: 1em;
+            color: #FFFFFF;
+            font-weight: bold;
         }
 
         #messages span {
-        font-weight: normal;
+            font-weight: normal;
         }
 
-        .game {
-            color:red;
+        #game {
+            color: lightgray;
+            display: none;
         }
-        #alternative1 {
+
+        #alternative0 {
             background:blue;
+            padding: 0 10px;
+            display: flex;
+            font-size: 30px;
+            border-bottom: 10px solid black;
         }
-        #alternative2 {
+
+        #alternative1 {
             background:red;
+            color: lightgray;
+            padding: 0 10px;
+            display: flex;
+            font-size: 30px;
+            border-bottom: 10px solid black;
         }
-        #alternative1 {
+
+        #alternative2 {
             background:green;
+            color: lightgray;
+            padding: 0 10px;
+            display: flex;
+            font-size: 30px;
+            border-bottom: 10px solid black;
         }
-        #alternative1 {
+
+        #alternative3 {
             background:yellow;
+            color: #000000;
+            padding: 0 10px;
+            display: flex;
+            font-size: 30px;
+            border-bottom: 10px solid black;
         }
+
     </style>
 </head>
-<body>
-<div id="welcome" class="textcontainer">
-    <h1>Bli med på Quiz!</h1>
-    <div style="margin-bottom:3em;">Skann QR-koden med din smarttelefon</div>
-    <img id="qr" alt="QR Code"/>
-    <div id="participantContainer">
-        <div>
-            <span id="numberOfPlayers">0</span> er innmeldt.
-        </div>
-        <div>
-            <span id="numberOfReadyPlayers">0</span> spillere er klare
-        </div>
-        <div>
-            <span id="lastPlayerJoined"></span>
-        </div>
-        <div id="playerlist"></div>
-    </div>
-</div>
-<div class="game" style="display:none">
-    <h1>
-        <div id="question">
-
-        </div>
-    </h1>
-    <div id="alternatives">
-        <div id="alternative1">
-
-        </div>
-        <div id="alternative2">
-
-        </div>
-        <div id="alternative3">
-
-        </div>
-        <div id="alternative4">
-
+<body class="background">
+<div class="container">
+    <div id="welcome" class="textcontainer">
+        <h1>Bli med på Quiz!</h1>
+        <h3>Skann QR-koden med din smarttelefon</h3>
+        <img id="qr" class="qr-code" alt="QR Code"/>
+        <div id="participantContainer">
+            <div>
+                <h4><span id="numberOfPlayers">0</span> er innmeldt</h4>
+            </div>
+            <div>
+                <h4><span id="numberOfReadyPlayers">0</span> spillere er klare</h4>
+            </div>
+            <div>
+                <h4><span id="lastPlayerJoined"></span></h4>
+            </div>
+            <h4><div id="playerlist"></div></h4>
         </div>
     </div>
-    <div class="messagecontainer">
-        <div id="messages" style="text-align:center">
-            <div style="display:none">
-                <div id="title">Sample Media Receiver HUD</div>
-                <div>Application State: <span id="applicationState">-</span></div>
-                <div>Session Count: <span id="sessionCount">0</span></div>
-                <div>Media Element State: <span id="mediaElementState">-</span></div>
-                <div>Cast Receiver Manager Message: <span id="castReceiverManagerMessage">-</span></div>
-                <div>Media Manager Message: <span id="mediaManagerMessage">-</span></div>
-                <div>Message Bus Message: <span id="messageBusMessage">-</span></div>
-                <div>Volume: <span id="volumeMessage">Unknown</span></div>
-                <div>Host State: <span id="mediaHostState">Unknown</span></div>
-                <div>Media Type: <span id="mediaType">Unkown</span></div>
-                <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
-                <div>Message: <span id="message">No message</span></div>
+    <div id="game">
+        <div class="col-xs-12">
+            <h1>
+                <span id="question">dette er et spørsmål, som jeg trenger svar på.. uten spørsmålstegn.. jeg trenger svaralternativer for å kunne svare.. hjelp.. </span>
+            </h1>
+        </div>
+        <div class="col-xs-12">
+            <div class="videocontainer col-xs-6 clearfix">
+                <div id="player"></div>
+                <video id="receiverVideoElement"></video>
+            </div>
+            <div class="imagecontainer col-xs-6">
+                <img id="imageElement"/>
+            </div>
+            <div id="alternatives col-xs-6">
+                <div id="alternative0">
+                        svar alternativ nummer ..: hva var spørsmålet?
+                </div>
+                <div id="alternative1">
+                    svar alternativ nummer ..: hva var spørsmålet? svar alternativ nummer ..: hva var spørsmålet?
+                </div>
+                <div id="alternative2">
+                    svar alternativ nummer ..:
+                </div>
+                <div id="alternative3">
+                    svar alternativ nummer ..: hva var spørsmålet?svar alternativ nummer ..: hva var spørsmålet?svar alternativ nummer ..:
+                </div>
+            </div>
+        </div>
+        <div class="messagecontainer">
+            <div id="messages" style="text-align:center">
+                <div style="display:none">
+                    <div id="title">Sample Media Receiver HUD</div>
+                    <div>Application State: <span id="applicationState">-</span></div>
+                    <div>Session Count: <span id="sessionCount">0</span></div>
+                    <div>Media Element State: <span id="mediaElementState">-</span></div>
+                    <div>Cast Receiver Manager Message: <span id="castReceiverManagerMessage">-</span></div>
+                    <div>Media Manager Message: <span id="mediaManagerMessage">-</span></div>
+                    <div>Message Bus Message: <span id="messageBusMessage">-</span></div>
+                    <div>Volume: <span id="volumeMessage">Unknown</span></div>
+                    <div>Host State: <span id="mediaHostState">Unknown</span></div>
+                    <div>Media Type: <span id="mediaType">Unkown</span></div>
+                    <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
+                    <div>Message: <span id="message">No message</span></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="videocontainer">
-        <video id="receiverVideoElement"></video>
-        <div id="player"></div>
-    </div>
-    </div>
+</div>
 
 <script type="text/javascript">
         "use strict";
@@ -341,11 +396,29 @@ limitations under the License.
 
             /* Game round receives */
             if(payload.message.type == 'game') {
-                console.log(payload.message);
-                $('#question').text(payload.message.game.question);
-                $.each(payload.message.game.alternatives, function(index,element){
-                    $('#alternative' + (index + 1)).text(payload.message.game.alternatives[index]);
+                console.log('game',payload.message.game.game);
+                var game = payload.message.game.game;
+                $('#question').text(game.question);
+                $.each(game.alternatives, function(index,element){
+                    $('#alternative' + index).text(element.text);
                 });
+                if (game.mediatype=='youtube') {
+                    var videoId = game.media.substring(game.media.indexOf('?v=')+3);
+
+                    player = new YT.Player('player', {
+                        height: 600,
+                        width: 400,
+                        videoId: videoId,
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
+                        events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                        }
+                    });
+                } else if (game.mediatype=='image'){
+                    console.log('Imagequiz');
+                    $('#imageelement').attr('src',game.media);
+                }
             }
 
             displayMessage(event['data']);
@@ -769,7 +842,7 @@ limitations under the License.
                         height: 600,
                         width: 400,
                         videoId: videoId,
-                        playerVars: { 'autoplay': 0, 'controls': 0 },
+                        playerVars: { 'autoplay': 1, 'controls': 0 },
                         events: {
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange

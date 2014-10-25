@@ -99,6 +99,7 @@ var Waiting = React.createClass({
             <div className="waiting-screen container">
                 <div className="center">
                     <h1>Waiting..</h1>
+                    <img src="/ajax-loader.gif" />
                 </div>
             </div>
         );
