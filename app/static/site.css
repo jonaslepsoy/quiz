@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.mobile-receiver {
+    font: 13px Helvetica, Arial;
+}
+
+form {
+    background: #000;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+form input {
+    border: 0;
+    padding: 10px;
+    width: 90%;
+    margin-right: .5%;
+}
+
+form button {
+    width: 9%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px;
+}
+
+/* LOGIN */
+.login-screen{
+    margin-top: 40px;
+}
+
+label.label{
+    color: black;
+    font-size: 100%;
+}
+
+/* ALTERNATIVES */
+.alternatives{
+    margin-top: 40px;
+}
+
+button{
+    border: none;
+    padding: 5px;
+}
+
+.button-group{
+    height: 100vh;
+}
+
+.button-group button{
+    height: 50%;
+}
+
+#red{
+    background-color: red;
+}
+
+#blue{
+    background-color: blue;
+}
+
+#green{
+    background-color: green;
+}
+
+#yellow{
+    background-color: yellow;
+}
+
+/* SLIDER */
+.slider{
+    margin-top: 40px;
+}
+
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#messages li {
+    padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+    background: #eee;
+}
