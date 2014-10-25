@@ -17,6 +17,17 @@ $(document).ready(function () {
         stopApp();
     });
 
+    $('#startgame').click(function () {
+        var message = {
+            message: {
+                type: 'command',
+                command: 'startGame'
+            }
+        }
+        sendMessage(message);
+    });
+
+
 });
 
 function init(appid) {
@@ -545,7 +556,7 @@ function mediaCommandSuccessCallback(info) {
   appendMessage(info);
 }
 
-function q1(){
+function question(){
     var question = {
         question: {
             question: "Hva heter artisten?",
