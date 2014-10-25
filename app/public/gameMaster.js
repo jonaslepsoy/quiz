@@ -34,7 +34,8 @@ socket.on('new player', function(player) {
     playersList.push(player);
     data.publish({players: playersList});
     var player = {
-        player: {
+        message: {
+            type: 'player',
             username: player.username,
             score: player.score
         }
