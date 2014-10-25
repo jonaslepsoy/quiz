@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 var socket = io();
-var players = {};
 var playersList = [];
 
 var data = {
@@ -29,7 +28,15 @@ socket.on('players', function(players) {
 });
 
 socket.on('new player', function(party) {
-    players[party.newPlayer.username] = player;
+    console.log('party: ' ,party);
+    console.log('partyplayers: ',party.players);
+
+    var players = [];
+    $.each(party.players, function() {
+        players.push(this.username);
+    });
+
+    console.log('players', players);
     playersList.push(party.newPlayer);
     data.publish({players: playersList});
 
@@ -45,7 +52,7 @@ socket.on('new player', function(party) {
             type: 'party',
             minPlayers: party.minPlayers,
             readyPlayers: party.readyPlayers,
-            players: players.players
+            players: players
         }
     }
     console.log('player: ', player);
