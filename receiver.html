@@ -111,7 +111,7 @@ limitations under the License.
         <div id="playerlist"></div>
     </div>
 </div>
-<div class="game" style="display:none">
+<div id="game" style="display:none">
     <h1>
         <div id="question">
             Spørsmål
@@ -345,7 +345,6 @@ limitations under the License.
 
             /* Game round receives */
             if(payload.message.type == 'game') {
-                $('#game').show();
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
                 $('#question').text(game.question);
