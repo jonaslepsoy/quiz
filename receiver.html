@@ -286,8 +286,8 @@ limitations under the License.
             }*/
 
             console.log(event);
-            console.log(event.data['player']);
-            if(event.data.hasOwnProperty('player')) {
+            console.log(event.data.player.type);
+            if(event['data'].player.type=='player') {
                 numberOfPlayers++;
                 $('#numberOfPlayers').text(numberOfPlayers);
                 $('#numberOfSpots').text(spots - numberOfPlayers);
