@@ -46,6 +46,14 @@ limitations under the License.
         border:0px solid silver;
         background-color: #000000;
         }
+        #welcome {
+            text-align:center
+        }
+        .messagecontainer, .textcontainer{
+            background-color: rgba(0,0,0,0.5);
+            display:block;
+            color:white;
+        }
         .messagecontainer {
         width:50%;
         height:100%;
@@ -66,29 +74,33 @@ limitations under the License.
     </style>
 </head>
 <body>
+<div id="welcome" class="textcontainer">
+    <h1>Bli med på Quiz!</h1>
+    <div style="margin-bottom:3em;">Skann QR-koden med din smarttelefon</div>
+    <img id="qr" alt="QR Code"/>
+</div>
 <div class="messagecontainer">
-    <div id="messages">
-        <div id="title">Sample Media Receiver HUD</div>
-        <div>Application State: <span id="applicationState">-</span></div>
-        <div>Session Count: <span id="sessionCount">0</span></div>
-        <div>Media Element State: <span id="mediaElementState">-</span></div>
-        <div>Cast Receiver Manager Message: <span id="castReceiverManagerMessage">-</span></div>
-        <div>Media Manager Message: <span id="mediaManagerMessage">-</span></div>
-        <div>Message Bus Message: <span id="messageBusMessage">-</span></div>
-        <div>Volume: <span id="volumeMessage">Unknown</span></div>
-        <div>Host State: <span id="mediaHostState">Unknown</span></div>
-        <div>Media Type: <span id="mediaType">Unkown</span></div>
-        <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
-        <div>Message: <span id="message">No message</span></div>
-        <img id="qr" alt="QR Code"/>
+    <div id="messages" style="text-align:center">
+
+        <div style="display:none">
+            <div id="title">Sample Media Receiver HUD</div>
+            <div>Application State: <span id="applicationState">-</span></div>
+            <div>Session Count: <span id="sessionCount">0</span></div>
+            <div>Media Element State: <span id="mediaElementState">-</span></div>
+            <div>Cast Receiver Manager Message: <span id="castReceiverManagerMessage">-</span></div>
+            <div>Media Manager Message: <span id="mediaManagerMessage">-</span></div>
+            <div>Message Bus Message: <span id="messageBusMessage">-</span></div>
+            <div>Volume: <span id="volumeMessage">Unknown</span></div>
+            <div>Host State: <span id="mediaHostState">Unknown</span></div>
+            <div>Media Type: <span id="mediaType">Unkown</span></div>
+            <div>Media Protocol: <span id="mediaProtocol">Unknown</span></div>
+            <div>Message: <span id="message">No message</span></div>
+        </div>
     </div>
 </div>
 <div class="videocontainer">
     <video id="receiverVideoElement"></video>
-    <div id="wrapper">
-        <div id="player"></div>
-        <div id="annotation"></div>
-    </div>
+    <div id="player"></div>
 </div>
 
 <script type="text/javascript">
@@ -102,6 +114,8 @@ limitations under the License.
         window.mediaProtocol = null;
         window.mediaPlayer = null;
         window.connectedCastSenders = []; // {senderId:'', channel:obj}
+
+        var player = null; //  Our Youtube Player object;
 
         function setHudMessage(elementId, message) {
             document.getElementById(elementId).innerHTML = '' + JSON.stringify(message);
@@ -261,6 +275,8 @@ limitations under the License.
             }*/
 
             console.log(event);
+
+           
 
             displayMessage(event['data']);
         }
@@ -667,7 +683,7 @@ limitations under the License.
         }
 
         function displayQR(url) {
-            $('#qr').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + 'http://gullible-dingo-5267.vagrantshare.com/' + '&chld=H|0' );
+            $('#qr').attr('src', 'http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + url + '&chld=H|0' );
         }
 
 
@@ -675,35 +691,26 @@ limitations under the License.
 
         var ytMessages;
 
+
         $(document).ready(function(){
 
-            var player;
-
-        ytMessages={
-            "playVideo": function() { // execute various YouTube commands when the corresponding messages are sent from the sender
-                    player.playVideo();
-            },
-            "pauseVideo": function() {
-                    player.pauseVideo();
-            },
-            "stopVideo": function() {
-                    player.stopVideo();
-            }
-            };
-        });
-
-        function onYouTubeIframeAPIReady() {
-                player = new YT.Player('player', {
-                        height: 562,
-                        width: 1000,
-                        videoId: 'g5WB-p-QBJc',
-                        playerVars: { 'autoplay': 1, 'controls': 0 },
+            function onYouTubeIframeAPIReady() {
+                /*player = new YT.Player('player', {
+                        height: 600,
+                        width: 400,
+                        videoId: videoId,
+                        playerVars: { 'autoplay': 0, 'controls': 0 },
                         events: {
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange
                         }
-                });
-        }
+                });*/
+            }
+
+
+            displayQR('http://gullible-dingo-5267.vagrantshare.com/');
+
+        });
 
         function onPlayerReady(event) {
             console.log(event);
