@@ -28,7 +28,6 @@ socket.on('players', function(players) {
 });
 
 socket.on('new player', function(party) {
-
     var players = [];
     $.each(party.players, function() {
         players.push(this.username);
@@ -95,7 +94,8 @@ socket.on('update scoreboard', function(scoreboard) {
     var message = {
         message: {
             type: 'scoreboard',
-            scoreboard: scoreboard
+            scoreboard: scoreboard.players,
+            game: scoreboard.currentGame
         }
     };
     sendMessage(message);
