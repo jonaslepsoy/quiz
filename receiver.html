@@ -436,7 +436,7 @@ limitations under the License.
             if(payload.message.type == 'scoreboard') {
                 if(player !== null ) {
                     console.log('Clearing last video');
-                    player.destroy();
+                    player.stopVideo();
                 }
                 $('#game').hide();
                 updateScoreboard(payload.message);
