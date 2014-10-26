@@ -127,7 +127,9 @@ var GameOver = React.createClass({
     render: function() {
         return (
             <div className="gameOver-screen">
-                GAME OVER!
+                <div className="center">
+                    <h1>GAME OVER!</h1>
+                </div>
             </div>
         );
     }

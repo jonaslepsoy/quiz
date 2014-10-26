@@ -135,22 +135,15 @@ label.label{
     font-size: 100%;
 }
 
-input#username{
-}
-
 /* READY */
+.waiting-screen,
+.gameOver-screen,
+.next-screen,
 .ready-screen{
     margin-top: 40px;
 }
 
-/* READY */
-.waiting-screen{
-    margin-top: 40px;
-}
-
 /* ALTERNATIVES */
-.alternatives{
-}
 
 button{
     border: none;
@@ -199,10 +192,3 @@ button{
 #messages li:nth-child(odd) {
     background: #eee;
 }
-
-/* ---- GAMEMASTER ---- */
-/* STARTUP */
-.qr-code{
-}
-
-/* GAME */
