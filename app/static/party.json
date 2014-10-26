@@ -4,6 +4,34 @@
         {
             "type": "quiz",
             "mediatype": "youtube",
+            "media": "https://www.youtube.com/watch?v=xdB1s7_Kuzw",
+            "question": "Hvilken superskruk ser du først i denne videoen",
+            "alternatives": [
+                {
+                    "text": "B-Gjengen",
+                    "valid": false,
+                    "color": "blue"
+                },
+                {
+                    "text": "Donald Duck",
+                    "valid": false,
+                    "color": "red"
+                },
+                {
+                    "text": "Spider-Man",
+                    "valid": false,
+                    "color": "green"
+                },
+                {
+                    "text": "Green Goblin",
+                    "valid": true,
+                    "color": "yellow"
+                }
+            ]
+        },
+        {
+            "type": "quiz",
+            "mediatype": "youtube",
             "media": "https://www.youtube.com/watch?v=An2a1_Do_fc",
             "question": "Sang og artist?",
             "alternatives": [
