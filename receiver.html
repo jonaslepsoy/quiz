@@ -434,9 +434,13 @@ limitations under the License.
             }
 
             if(payload.message.type == 'scoreboard') {
+                if(player !== null ) {
+                    console.log('Clearing last video');
+                    player.destroy();
+                }
                 $('#game').hide();
-                $('#scoreboard').show();
                 updateScoreboard(payload.message.players);
+                $('#scoreboard').show();
             }
 
             /* QR Code */
@@ -867,6 +871,7 @@ limitations under the License.
         /* Scoreboard */
         /* TODO: Check that scoreboard data is applied correctly */
         function updateScoreboard(players) {
+            console.log('Updating scoreboard' , players);
             $('#scoreboard').children().remove(); /* Drop our previous list */
             $.each(players,function(index,player) {
                 $('#scoreboard').append('<div>' + player.username + ': ' + player.score + '</div>');

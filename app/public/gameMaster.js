@@ -90,7 +90,7 @@ socket.on('start game', function(game) {
 });
 
 socket.on('update scoreboard', function(scoreboard) {
-    console.log(scoreboard);
+    console.log('update scoreboard, dude!' , scoreboard);
     var message = {
         message: {
             type: 'scoreboard',
