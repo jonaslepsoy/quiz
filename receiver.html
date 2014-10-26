@@ -399,6 +399,7 @@ limitations under the License.
             /* Game round receives */
             if(payload.message.type == 'game') {
                 if(player !== null ) {
+                    console.log('Clearing last video');
                     player.clearVideo();
                 }
                 console.log('game',payload.message.game.game);
