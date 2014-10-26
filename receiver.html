@@ -439,7 +439,7 @@ limitations under the License.
                     player.destroy();
                 }
                 $('#game').hide();
-                updateScoreboard(payload.message.players);
+                updateScoreboard(payload.message);
                 $('#scoreboard').show();
             }
 
@@ -870,10 +870,11 @@ limitations under the License.
 
         /* Scoreboard */
         /* TODO: Check that scoreboard data is applied correctly */
-        function updateScoreboard(players) {
-            console.log('Updating scoreboard' , players);
+        function updateScoreboard(scoreboard) {
+            console.log('Updating scoreboard' , scoreboard);
             $('#scoreboard').children().remove(); /* Drop our previous list */
-            $.each(players,function(index,player) {
+            $('#scoreboardHeading').text(scoreboard.text);
+            $.each(scoreboard.players,function(index,player) {
                 $('#scoreboard').append('<div>' + player.username + ': ' + player.score + '</div>');
             });
         }
