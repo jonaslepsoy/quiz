@@ -4,8 +4,36 @@
         {
             "type": "quiz",
             "mediatype": "youtube",
+            "media": "https://www.youtube.com/watch?v=R65YyM7fB7U",
+            "question": "I hvilken tv-serie er denne karakteren introdusert?",
+            "alternatives": [
+                {
+                    "text": "Åpen Post",
+                    "valid": false,
+                    "color": "blue"
+                },
+                {
+                    "text": "Tre brødre som ikke er brødre",
+                    "valid": false,
+                    "color": "red"
+                },
+                {
+                    "text": "Lillelørdag",
+                    "valid": false,
+                    "color": "green"
+                },
+                {
+                    "text": "Oslolosen",
+                    "valid": true,
+                    "color": "yellow"
+                }
+            ]
+        },
+        {
+            "type": "quiz",
+            "mediatype": "youtube",
             "media": "https://www.youtube.com/watch?v=xdB1s7_Kuzw",
-            "question": "Hvilken superskruk ser du først i denne videoen",
+            "question": "Hvilken superskurk ser du først i denne videoen?",
             "alternatives": [
                 {
                     "text": "B-Gjengen",
