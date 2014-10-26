@@ -400,7 +400,7 @@ limitations under the License.
             if(payload.message.type == 'game') {
                 if(player !== null ) {
                     console.log('Clearing last video');
-                    player.clearVideo();
+                    player.destroy();
                 }
                 console.log('game',payload.message.game.game);
                 var game = payload.message.game.game;
