@@ -146,9 +146,9 @@ limitations under the License.
             <img id="qr" class="qr-code" alt="QR Code"/>
         </div>
         <div id="participantContainer">
-            <div>
+            <!--div>
                 <h4><span id="numberOfPlayers">0</span> er innmeldt</h4>
-            </div>
+            </div-->
             <div style="display:none">
                 <h4><span id="numberOfReadyPlayers">0</span> spillere er klare</h4>
             </div>
@@ -389,7 +389,7 @@ limitations under the License.
 
             /* New player joined */
             if(payload.message.type == 'player') {
-                $('#lastPlayerJoined').text(payload.message.username + ' er med!!!');
+                $('#lastPlayerJoined').append('<div>'+payload.message.username+' er med!!!</div>');
             }
 
             /* Command received */
