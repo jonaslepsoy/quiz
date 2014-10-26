@@ -101,6 +101,17 @@ socket.on('update scoreboard', function(scoreboard) {
     sendMessage(message);
 });
 
+socket.on('game over', function(players) {
+    console.log(players);
+    var message = {
+        message: {
+            type: 'scoreboard',
+            scoreboard: players
+        }
+    };
+    sendMessage(message);
+});
+
 
 var GameMaster = React.createClass({
     getInitialState: function() {
