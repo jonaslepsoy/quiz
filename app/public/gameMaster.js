@@ -94,7 +94,7 @@ socket.on('update scoreboard', function(scoreboard) {
     var message = {
         message: {
             type: 'scoreboard',
-            scoreboard: scoreboard.players,
+            players: scoreboard.players,
             game: scoreboard.currentGame
         }
     };
@@ -106,7 +106,7 @@ socket.on('game over', function(players) {
     var message = {
         message: {
             type: 'scoreboard',
-            scoreboard: players
+            players: players
         }
     };
     sendMessage(message);
