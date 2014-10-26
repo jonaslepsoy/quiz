@@ -7,10 +7,26 @@
             "media": "https://www.youtube.com/watch?v=An2a1_Do_fc",
             "question": "Sang og artist?",
             "alternatives": [
-                {"text": "Neil Young - Heart of gold", "valid": false, "color": "blue"},
-                {"text": "Neil Young - Old man", "valid": true, "color": "red"},
-                {"text": "Bob Dylan - Knocking on heavens door", "valid": false, "color": "green"},
-                {"text": "Shaggy - Oh Carolina", "valid": false, "color": "yellow"}
+                {
+                    "text": "Neil Young - Heart of gold",
+                    "valid": false,
+                    "color": "blue"
+                },
+                {
+                    "text": "Neil Young - Old man",
+                    "valid": true,
+                    "color": "red"
+                },
+                {
+                    "text": "Bob Dylan - Knocking on heavens door",
+                    "valid": false,
+                    "color": "green"
+                },
+                {
+                    "text": "Shaggy - Oh Carolina",
+                    "valid": false,
+                    "color": "yellow"
+                }
             ]
         },
         {
@@ -19,10 +35,82 @@
             "media": "https://www.youtube.com/watch?v=aQxcugbmg9M",
             "question": "Hva drepte denne mannen?",
             "alternatives": [
-                {"text": "Pusekatt", "valid": false, "color": "blue"},
-                {"text": "Rokke", "valid": true, "color": "red"},
-                {"text": "Hest", "valid": false, "color": "green"},
-                {"text": "Mora di!", "valid": false, "color": "yellow"}
+                {
+                    "text": "Pusekatt",
+                    "valid": false,
+                    "color": "blue"
+                },
+                {
+                    "text": "Rokke",
+                    "valid": true,
+                    "color": "red"
+                },
+                {
+                    "text": "Hest",
+                    "valid": false,
+                    "color": "green"
+                },
+                {
+                    "text": "Mora di!",
+                    "valid": false,
+                    "color": "yellow"
+                }
+            ]
+        },
+        {
+            "type": "quiz",
+            "mediatype": "youtube",
+            "media": "https://www.youtube.com/watch?v=vuDuE-39afQ",
+            "question": "Nobelprisen i fysikk i 2014 ble utdelt til de som oppfant...",
+            "alternatives": [
+                {
+                    "text": "Higgs-bosonet",
+                    "valid": false,
+                    "color": "blue"
+                },
+                {
+                    "text": "iPhone 6",
+                    "valid": false,
+                    "color": "red"
+                },
+                {
+                    "text": "Blå LED-lys",
+                    "valid": true,
+                    "color": "green"
+                },
+                {
+                    "text": "Tesla Model S",
+                    "valid": false,
+                    "color": "yellow"
+                }
+            ]
+        },
+        {
+            "type": "quiz",
+            "mediatype": "youtube",
+            "media": "https://www.youtube.com/watch?v=xCipKmyngLY",
+            "question": "I hvilken film med George Clooney i hovedrollen ble The Soggy Bottom boys kjent med denne låta?",
+            "alternatives": [
+                {
+                    "text": "O Mama, where art thou?",
+                    "valid": false,
+                    "color": "blue"
+                },
+                {
+                    "text": "Ocean&quot;s Eleven",
+                    "valid": false,
+                    "color": "red"
+                },
+                {
+                    "text": "O Brother, where art thou?",
+                    "valid": true,
+                    "color": "green"
+                },
+                {
+                    "text": "Solaris",
+                    "valid": false,
+                    "color": "yellow"
+                }
             ]
         }
     ]

@@ -158,6 +158,9 @@ limitations under the License.
             <h4><div id="playerlist"></div></h4>
         </div>
     </div>
+    <div id="scoreboard" style="width:100%;text-align:center:font-size:2em">
+
+    </div>
     <div id="game">
         <div class="col-xs-12">
             <h1>
@@ -398,6 +401,8 @@ limitations under the License.
 
             /* Game round receives */
             if(payload.message.type == 'game') {
+                $('#scoreboard').hide();
+                $('#game').show();
                 if(player !== null ) {
                     console.log('Clearing last video');
                     player.destroy();
@@ -407,6 +412,7 @@ limitations under the License.
                 $('#question').text(game.question);
                 $.each(game.alternatives, function(index,element){
                     $('#alternative' + index).text(element.text);
+                    $('#alternative' + index).css('background:'+element.color);
                 });
                 if (game.mediatype=='youtube') {
                     var videoId = game.media.substring(game.media.indexOf('?v=')+3);
@@ -425,6 +431,12 @@ limitations under the License.
                     console.log('Imagequiz');
                     $('#imageelement').attr('src',game.media);
                 }
+            }
+
+            if(payload.message.type == 'scoreboard') {
+                $('#game').hide();
+                $('#scoreboard').show();
+                updateScoreboard(payload.message.scoreboard);
             }
 
             /* QR Code */
@@ -843,26 +855,6 @@ limitations under the License.
 
         /* YOUTUBE */
 
-        var ytMessages;
-
-
-        $(document).ready(function(){
-
-            function onYouTubeIframeAPIReady() {
-                /*player = new YT.Player('player', {
-                        height: 600,
-                        width: 400,
-                        videoId: videoId,
-                        playerVars: { 'autoplay': 1, 'controls': 0 },
-                        events: {
-                                'onReady': onPlayerReady,
-                                'onStateChange': onPlayerStateChange
-                        }
-                });*/
-            }
-
-        });
-
         function onPlayerReady(event) {
             console.log(event);
         }
@@ -870,6 +862,15 @@ limitations under the License.
 
         function onPlayerStateChange(event) {
             console.log(event);
+        }
+
+        /* Scoreboard */
+        /* TODO: Check that scoreboard data is applied correctly */
+        function updateScoreboard(scoreboard) {
+            $('#scoreboard').children().remove(); /* Drop our previous list */
+            $.each(scoreboard.players,function(index,player) {
+                $('#scoreboard').append('<div>' + player.username + ': ' + player.score + '</div>');
+            });
         }
 </script>
 </body>
