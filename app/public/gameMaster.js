@@ -48,7 +48,7 @@ socket.on('new player', function(party) {
             type: 'party',
             minPlayers: party.minPlayers,
             readyPlayers: party.readyPlayers,
-            players: players
+            players: party.players
         }
     }
     console.log('party',party);

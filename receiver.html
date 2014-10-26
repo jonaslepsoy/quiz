@@ -149,7 +149,7 @@ limitations under the License.
             <div>
                 <h4><span id="numberOfPlayers">0</span> er innmeldt</h4>
             </div>
-            <div>
+            <div style="display:none">
                 <h4><span id="numberOfReadyPlayers">0</span> spillere er klare</h4>
             </div>
             <div>
@@ -383,7 +383,7 @@ limitations under the License.
 
             /* Party update */
             if(payload.message.type == 'party') {
-                $('#numberOfPlayers').text(payload.message.players);
+                $('#numberOfPlayers').text(payload.message.players.join(',');
                 $('#numberOfReadyPlayers').text(payload.message.readyPlayers);
             }
 
